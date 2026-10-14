@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" style="width: 100%; height: 100%;">
+<head>
+  <meta charset="utf-8">
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="">
+  <link rel="preload" href="https://static.thingsboard.cloud/assets/fonts/MaterialIcons-Regular.ttf" as="font" type="font/ttf" crossorigin="anonymous"/>
+  <link rel="preload" href="https://static.thingsboard.cloud/assets/fonts/MaterialIconsRound-Regular.otf" as="font" type="font/otf" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://static.thingsboard.cloud/assets/fonts/material-icons.css"/>
+  <style id="initial" type="text/css">
+
+    body, html {
+      height: 100%;
+      overflow: hidden;
+      background-color: #eee;
+    }
+
+    .tb-loading-spinner {
+      margin: auto;
+      z-index: 1;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 136px;
+      height: 30px;
+      text-align: center;
+    }
+
+    .tb-loading-spinner > div {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      background-color: rgb(43,160,199);
+
+      border-radius: 100%;
+      display: inline-block;
+      -webkit-animation: tb-bouncedelay 1.4s infinite ease-in-out both;
+      -moz-animation: tb-bouncedelay 1.4s infinite ease-in-out both;
+      animation: tb-bouncedelay 1.4s infinite ease-in-out both;
+    }
+
+    .tb-loading-spinner .tb-bounce1 {
+      -webkit-animation-delay: -0.32s;
+      -moz-animation-delay: -0.32s;
+      animation-delay: -0.32s;
+    }
+
+    .tb-loading-spinner .tb-bounce2 {
+      -webkit-animation-delay: -0.16s;
+      -moz-animation-delay: -0.16s;
+      animation-delay: -0.16s;
+    }
+
+    @-webkit-keyframes tb-bouncedelay {
+      0%, 80%, 100% { -webkit-transform: scale(0) }
+      40% { -webkit-transform: scale(1.0) }
+    }
+
+    @-moz-keyframes tb-bouncedelay {
+      0%, 80%, 100% { -moz-transform: scale(0) }
+      40% { -moz-transform: scale(1.0) }
+    }
+
+    @keyframes tb-bouncedelay {
+      0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        -moz-transform: scale(0);
+        transform: scale(0);
+      } 40% {
+          -webkit-transform: scale(1.0);
+          -moz-transform: scale(1.0);
+          transform: scale(1.0);
+        }
+    }
+
+  </style>
+<link rel="stylesheet" href="https://static.thingsboard.cloud/app-theme-G3YMFNZ5.css"><link rel="stylesheet" href="https://static.thingsboard.cloud/login-theme-Y6WZ7QK6.css"><link rel="stylesheet" href="https://static.thingsboard.cloud/report-component-ZOESMKZ3.css"><link rel="stylesheet" href="https://static.thingsboard.cloud/styles-MPUV7KA3.css"></head>
+<body class="tb-default">
+  <tb-root></tb-root>
+  <div id="tb-loading-spinner" class="tb-loading-spinner">
+    <div class="tb-bounce1"></div>
+    <div class="tb-bounce2"></div>
+    <div class="tb-bounce3"></div>
+  </div>
+<link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-6B7D3KAF.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-G3ZPFVCF.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-TGZEYIBT.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-IFSSJCNY.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-A3EANZMX.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-X3T3YFWX.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-SXPSLNKO.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-SO3MTKKB.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-PCR4ZCXN.js"><link rel="modulepreload" href="https://static.thingsboard.cloud/chunk-MB6Z3I6S.js"><script src="https://static.thingsboard.cloud/polyfills-6FA3EHOI.js" type="module"></script><script src="https://static.thingsboard.cloud/scripts-HV4CFAKB.js" defer></script><script src="https://static.thingsboard.cloud/main-SMVIVKY6.js" type="module"></script></body>
+</html>

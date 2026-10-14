@@ -1,0 +1,96 @@
+version: '3.8'
+
+services:
+  # =========================================================================
+  # MICROSERVICE 1: INGESTION & MULTI-PROTOCOL GATEWAY SERVICE
+  # Handles MQTT, Modbus TCP, OPC-UA, Socket.IO, WebSockets, and HTTP REST
+  # =========================================================================
+  gateway-service:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ahi-gateway-service
+    command: uvicorn app.main:app --host 0.0.0.0 --port 91
+    ports:
+      - "91:91"       # REST API, Socket.IO & WebSocket stream
+      - "1883:1883"   # MQTT Broker Bridge
+      - "502:502"     # Modbus TCP Gateway
+      - "4840:4840"   # OPC-UA IEC 62541 Gateway
+    environment:
+      - SERVICE_ROLE=gateway
+      - PORT=91
+      - REDIS_HOST=telemetry-redis
+      - REDIS_PORT=6379
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db-postgres:5432/ahi_dbm
+    depends_on:
+      - telemetry-redis
+      - db-postgres
+    restart: always
+
+  # =========================================================================
+  # MICROSERVICE 2: TELEMETRY & TIMESERIES STORAGE ENGINE
+  # In-memory Redis ring buffer + Downsampler + Timeseries persistence
+  # =========================================================================
+  telemetry-redis:
+    image: redis:7.2-alpine
+    container_name: ahi-telemetry-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: always
+
+  # =========================================================================
+  # MICROSERVICE 3: ASSET & DATA MANAGEMENT (DM) DATABASE
+  # ISA-95 Plant Hierarchy, Device Bindings, Tabular Storage, Object Security
+  # =========================================================================
+  db-postgres:
+    image: postgres:16-alpine
+    container_name: ahi-db-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ahi_dbm
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: always
+
+  # =========================================================================
+  # MICROSERVICE 4: ANALYTICS & FUNCTION BLOCK V8 ENGINE
+  # Mahalanobis-Taguchi Radar, JavaScript Sandbox, Scheduled Formulas
+  # =========================================================================
+  analytics-engine:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ahi-analytics-engine
+    command: python -m app.services.fb_engine
+    environment:
+      - SERVICE_ROLE=analytics
+      - REDIS_HOST=telemetry-redis
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db-postgres:5432/ahi_dbm
+    depends_on:
+      - telemetry-redis
+      - db-postgres
+    restart: always
+
+  # =========================================================================
+  # MICROSERVICE 5: UI & PRESENTATION DASHBOARD SERVICE
+  # React 18 SPA + ECharts WebGL Canvas + IIS / Nginx Reverse Proxy
+  # =========================================================================
+  ui-dashboard-service:
+    image: nginx:alpine
+    container_name: ahi-ui-dashboard
+    ports:
+      - "90:80"       # Industrial UI served on port 90
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html:ro
+    depends_on:
+      - gateway-service
+    restart: always
+
+volumes:
+  redis-data:
+  pg-data:

@@ -1,0 +1,43 @@
+{
+  "custom_widgets": [
+    {
+      "id": "w-custom-358ca1",
+      "type": "control_chart",
+      "title": "Superheater Steam Temperature SPC Monitor v2",
+      "category": "analytics",
+      "bundle": "ANALYTICS_SPC",
+      "version": "1.1.0",
+      "status": "PUBLISHED",
+      "isBuiltin": false,
+      "author": "Plant Operations Engineer",
+      "description": "Updated Shewhart control limits",
+      "icon": "Sparkles",
+      "multiTag": false,
+      "defaultW": 6,
+      "defaultH": 5,
+      "tags": [
+        "TIC_102.PV"
+      ],
+      "properties": {
+        "cl": 235.8,
+        "ucl": 245.0,
+        "lcl": 226.0,
+        "unit": "\u00b0C"
+      },
+      "style": {
+        "theme": "dark_industrial",
+        "cardStyle": "glass"
+      },
+      "actions": {},
+      "customScript": "",
+      "createdTime": 1791912258926,
+      "permissions": {
+        "read": true,
+        "write": true,
+        "delete": true
+      },
+      "updatedTime": 1791912258930
+    }
+  ],
+  "updated_at": 1791912536.9883683
+}

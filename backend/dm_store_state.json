@@ -1,0 +1,4216 @@
+{
+  "assets": [
+    {
+      "id": "ast-907f0596",
+      "name": "OIL TANK",
+      "parent_id": "",
+      "level": "ENTERPRISE",
+      "path": "OIL TANK",
+      "description": "",
+      "installed_date": "2024-03-05",
+      "is_bookmarked": false,
+      "attributes": [
+        {
+          "id": "attr-88b72b88",
+          "type": "Dynamic",
+          "name": "PRESSURE",
+          "value": "440.5",
+          "uom": "\u00b0C",
+          "tag_name": "TEST_1.tags.FIC_101.PV",
+          "device_id": "TEST_1",
+          "metric": "tags.FIC_101.PV",
+          "channel": "",
+          "expression": "@PRESSURE",
+          "quality": "Good",
+          "timestamp": "2026-10-14T03:24:40.211000Z",
+          "data_type": "Double",
+          "trigger_attribute": "PRESSURE",
+          "target_asset_name": "",
+          "target_attribute_name": ""
+        },
+        {
+          "id": "attr-01453f7b",
+          "type": "Runtime",
+          "name": "Pressure__RUNTIME",
+          "value": "441.5",
+          "uom": "\u00b0C",
+          "tag_name": "OIL TANK.Pressure__RUNTIME",
+          "device_id": "",
+          "metric": "",
+          "channel": "",
+          "expression": "Math.Round(Math.Abs(@PRESSURE+1),2)",
+          "quality": "Good",
+          "timestamp": "2026-10-14T03:24:40.215761Z",
+          "data_type": "Double",
+          "trigger_attribute": "PRESSURE",
+          "target_asset_name": "",
+          "target_attribute_name": "",
+          "source": "EXPRESSION",
+          "use_expression": true
+        },
+        {
+          "id": "attr-82dbac47",
+          "type": "Dynamic",
+          "name": "TEST",
+          "value": "55.4",
+          "uom": "\u00b0C",
+          "tag_name": "TEST_1.tags.PUMP_101A.DIFF_HEAD",
+          "device_id": "TEST_1",
+          "metric": "tags.PUMP_101A.DIFF_HEAD",
+          "channel": "",
+          "expression": "",
+          "quality": "Good",
+          "timestamp": "2026-10-14T03:24:40.211000Z",
+          "data_type": "Double",
+          "trigger_attribute": ""
+        },
+        {
+          "id": "attr-pump-sec",
+          "name": "specificEnergy",
+          "display_name": "Specific Energy Consumption per Unit Volume",
+          "data_type": "number",
+          "uom": "kWh/m3",
+          "category": "RUNTIME",
+          "value": "0.75",
+          "quality": "Good",
+          "timestamp": "2026-10-11T07:11:12.174977Z",
+          "type": "Runtime",
+          "source": "FUNCTION_BLOCK"
+        },
+        {
+          "id": "attr-pump-state",
+          "name": "isRunning",
+          "display_name": "Validated Running State",
+          "data_type": "boolean",
+          "uom": "bool",
+          "category": "CALCULATED",
+          "value": "True",
+          "quality": "Good",
+          "timestamp": "2026-10-11T07:11:12.175009Z",
+          "type": "Runtime",
+          "source": "FUNCTION_BLOCK"
+        },
+        {
+          "id": "attr-b82e3295",
+          "name": "validCalculation",
+          "display_name": "True if both Flow and Power are valid and positive",
+          "data_type": "boolean",
+          "uom": "bool",
+          "category": "CALCULATED",
+          "value": "True",
+          "quality": "Good",
+          "timestamp": "2026-10-11T07:11:12.175028Z",
+          "type": "Runtime",
+          "source": "FUNCTION_BLOCK"
+        }
+      ],
+      "tables": [],
+      "media": []
+    },
+    {
+      "id": "ast-pump-101",
+      "name": "Crude Feed Charge Pump P-101",
+      "level": "EQUIPMENT",
+      "parent_id": null,
+      "path": "Yokogawa Global Energy / Area 01 / Pump P-101",
+      "description": "Multi-stage API 610 crude charge pump P101",
+      "attributes": [
+        {
+          "id": "attr-p101-flow",
+          "name": "Flow",
+          "display_name": "Discharge Flow Rate",
+          "type": "Dynamic",
+          "data_type": "Double",
+          "uom": "m\u00b3/h",
+          "value": "25.0",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T11:16:25.273258Z"
+        },
+        {
+          "id": "attr-p101-run",
+          "name": "RunningStatus",
+          "display_name": "Pump Running Status",
+          "type": "Dynamic",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "true",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T10:18:09.533944Z"
+        },
+        {
+          "id": "attr-p101-sec",
+          "name": "SpecificEnergy",
+          "display_name": "Specific Energy Consumption per Unit Volume",
+          "type": "Runtime",
+          "data_type": "Double",
+          "uom": "kWh/m\u00b3",
+          "value": "0.75",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:27:37.964333Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-pump-kpi-101",
+          "function_block_output": "specificEnergy",
+          "use_expression": false,
+          "expression": ""
+        },
+        {
+          "id": "attr-p101-isrun",
+          "name": "IsRunning",
+          "display_name": "Pump Validated Running Status",
+          "type": "Runtime",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "true",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:27:37.964333Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-pump-kpi-101",
+          "function_block_output": "isRunning",
+          "use_expression": false,
+          "expression": ""
+        },
+        {
+          "id": "attr-p101-valid",
+          "name": "KPIValid",
+          "display_name": "Calculation Inputs Valid & Positive",
+          "type": "Runtime",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "true",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:27:37.964333Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-pump-kpi-101",
+          "function_block_output": "validCalculation",
+          "use_expression": false,
+          "expression": ""
+        },
+        {
+          "id": "attr-p101-flow",
+          "name": "FlowRate",
+          "display_name": "Discharge Flow Rate",
+          "type": "Dynamic",
+          "data_type": "Double",
+          "uom": "m\u00b3/h",
+          "value": "20.0",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T11:16:14.960286Z"
+        }
+      ]
+    },
+    {
+      "id": "ast-motor-101",
+      "name": "Drive Motor M-101",
+      "level": "EQUIPMENT",
+      "parent_id": null,
+      "path": "Yokogawa Global Energy / Area 01 / Motor M-101",
+      "description": "Induction motor for Pump P101 (150kW)",
+      "attributes": [
+        {
+          "id": "attr-m101-power",
+          "name": "Power",
+          "display_name": "Active Electric Power",
+          "type": "Dynamic",
+          "data_type": "Double",
+          "uom": "kW",
+          "value": "15.0",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T10:18:09.533944Z"
+        }
+      ]
+    },
+    {
+      "id": "ast-pump-102",
+      "name": "Crude Feed Charge Pump P-102",
+      "level": "EQUIPMENT",
+      "parent_id": null,
+      "path": "Yokogawa Global Energy / Area 01 / Pump P-102",
+      "description": "Standby API 610 crude charge pump P102",
+      "attributes": [
+        {
+          "id": "attr-p102-flow",
+          "name": "FlowRate",
+          "display_name": "Discharge Flow Rate",
+          "type": "Dynamic",
+          "data_type": "Double",
+          "uom": "m\u00b3/h",
+          "value": "35.0",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T10:18:09.533944Z"
+        },
+        {
+          "id": "attr-p102-run",
+          "name": "RunningStatus",
+          "display_name": "Pump Running Status",
+          "type": "Dynamic",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "true",
+          "quality": "Bad",
+          "timestamp": "2026-10-11T10:18:09.533944Z"
+        },
+        {
+          "id": "attr-07e62d1c",
+          "name": "SpecificEnergy",
+          "display_name": "SpecificEnergy",
+          "type": "Runtime",
+          "data_type": "Double",
+          "uom": "kWh/m3",
+          "value": "1.5",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:16:26.570788Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-ac12a921",
+          "function_block_output": "specificEnergy",
+          "use_expression": false,
+          "expression": ""
+        },
+        {
+          "id": "attr-b84ec4bb",
+          "name": "IsRunning",
+          "display_name": "IsRunning",
+          "type": "Runtime",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "True",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:16:26.570788Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-ac12a921",
+          "function_block_output": "isRunning",
+          "use_expression": false,
+          "expression": ""
+        },
+        {
+          "id": "attr-bf2b9896",
+          "name": "KPIValid",
+          "display_name": "KPIValid",
+          "type": "Runtime",
+          "data_type": "Boolean",
+          "uom": "bool",
+          "value": "True",
+          "quality": "Good",
+          "timestamp": "2026-10-11T11:16:26.570788Z",
+          "source": "FUNCTION_BLOCK",
+          "function_block_id": "fbe-ac12a921",
+          "function_block_output": "validCalculation",
+          "use_expression": false,
+          "expression": ""
+        }
+      ]
+    }
+  ],
+  "asset_templates": [
+    {
+      "id": "tmpl-749a3d78",
+      "name": "test",
+      "description": "",
+      "markup_devices": [
+        "device1",
+        "device2"
+      ],
+      "markup_channels": [
+        "channel1"
+      ],
+      "attributes": [
+        {
+          "name": "Pressure",
+          "type": "Dynamic"
+        }
+      ]
+    }
+  ],
+  "devices": [
+    {
+      "id": "TEST_1",
+      "identifier": "TEST_1",
+      "name": "OIL TANK",
+      "template_id": "dt-mv1qtkx9",
+      "template_name": "OIL TANK",
+      "broker": "CENTUM VP DCS & Industrial OPC UA Server Gateway",
+      "broker_id": "brk-9d161e31",
+      "connection_string": "http://localhost:91/api/v1/dm/broker/ingest",
+      "metric_retention_days": 90,
+      "sas_token_duration": 365,
+      "primary_key": "",
+      "sas_token": "",
+      "topic_telemetry": "refinery/telemetry",
+      "topic_command": "refinery/command",
+      "has_command": true,
+      "health_check": true,
+      "health_check_method": "Server Monitoring",
+      "monitoring_time_secs": 90,
+      "status": "Connected",
+      "last_edited": "2026-10-11T06:49:48.312406Z",
+      "last_seen": "2026-10-14T03:24:40.215593Z",
+      "last_data_received": "2026-10-14T03:24:40.211000Z",
+      "binding_value": "10",
+      "last_payload": {
+        "DeviceId": "TEST_1",
+        "timestamp": "2026-10-14T03:24:40.211Z",
+        "tags": {
+          "FIC_101.PV": 440.5,
+          "FIC_102.PV": 178.1,
+          "LIC_101.PV": 61.4,
+          "TIC_101.PV": 119.3,
+          "TIC_102.PV": 237.7,
+          "PIC_101.PV": 146.3,
+          "VIB_101.RMS": 1.742,
+          "PUMP_101A.DIFF_HEAD": 55.4,
+          "CDU_101.DELTA_T": 117,
+          "CDU_101.MT_DISTANCE": 1.35,
+          "PUMP_101A.ST": 1
+        }
+      },
+      "username": "",
+      "password": ""
+    }
+  ],
+  "device_templates": [
+    {
+      "id": "dt-mv1qtkx9",
+      "template_name": "OIL TANK",
+      "sample_json": "{\"DeviceId\":\"TEST_1\",\"timestamp\":\"2026-10-09T16:11:57.176Z\",\"tags\":{\"FIC_101.PV\":452.2,\"FIC_102.PV\":175,\"LIC_101.PV\":57.5,\"TIC_101.PV\":117.7,\"TIC_102.PV\":232.9,\"PIC_101.PV\":144.3,\"VIB_101.RMS\":1.889,\"PUMP_101A.DIFF_HEAD\":55.4,\"CDU_101.DELTA_T\":117,\"CDU_101.MT_DISTANCE\":1.35,\"PUMP_101A.ST\":1}}",
+      "metric_keys": [
+        {
+          "key": "DeviceId",
+          "name": "DeviceId",
+          "type": "Device ID",
+          "data_type": "Text",
+          "enable": true,
+          "expression": ""
+        },
+        {
+          "key": "timestamp",
+          "name": "timestamp",
+          "type": "Timestamp",
+          "data_type": "Timestamp",
+          "enable": true,
+          "expression": ""
+        },
+        {
+          "key": "tags.FIC_101.PV",
+          "name": "tags.FIC_101.PV",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.FIC_102.PV",
+          "name": "tags.FIC_102.PV",
+          "type": "Metric",
+          "data_type": "Int",
+          "enable": true,
+          "expression": ""
+        },
+        {
+          "key": "tags.LIC_101.PV",
+          "name": "tags.LIC_101.PV",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.TIC_101.PV",
+          "name": "tags.TIC_101.PV",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.TIC_102.PV",
+          "name": "tags.TIC_102.PV",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.PIC_101.PV",
+          "name": "tags.PIC_101.PV",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.VIB_101.RMS",
+          "name": "tags.VIB_101.RMS",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.PUMP_101A.DIFF_HEAD",
+          "name": "tags.PUMP_101A.DIFF_HEAD",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.CDU_101.DELTA_T",
+          "name": "tags.CDU_101.DELTA_T",
+          "type": "Metric",
+          "data_type": "Int",
+          "enable": true,
+          "expression": ""
+        },
+        {
+          "key": "tags.CDU_101.MT_DISTANCE",
+          "name": "tags.CDU_101.MT_DISTANCE",
+          "type": "Metric",
+          "data_type": "Double",
+          "enable": true,
+          "expression": "Math.Round(value, 2)"
+        },
+        {
+          "key": "tags.PUMP_101A.ST",
+          "name": "tags.PUMP_101A.ST",
+          "type": "Metric",
+          "data_type": "Int",
+          "enable": true,
+          "expression": ""
+        }
+      ],
+      "bindings": [],
+      "transport_config": {
+        "transport_type": "OPC_UA",
+        "endpoint_url": "opc.tcp://127.0.0.1:4840",
+        "security_policy": "Basic256Sha256",
+        "security_mode": "SignAndEncrypt",
+        "scan_period_ms": 1000,
+        "mqtt_topic": "refinery/telemetry/#",
+        "modbus_port": 502,
+        "modbus_unit_id": 1
+      },
+      "alarm_rules": [],
+      "rule_chain_id": "rc-root-01"
+    }
+  ],
+  "brokers": [
+    {
+      "id": "brk-9d161e31",
+      "name": "CENTUM VP DCS & Industrial OPC UA Server Gateway",
+      "broker_type": "Broker REST API",
+      "tier": "Standard RESTful",
+      "status": "ONLINE",
+      "port": 91,
+      "endpoint_url": "http://localhost:91/api/v1/dm/broker/ingest",
+      "connection_string": "",
+      "messages_today": 0,
+      "throughput_kb_min": 0,
+      "hub_units": 1,
+      "defender_for_iot": true,
+      "partitions": 4,
+      "sharing": true,
+      "hub_name": "",
+      "throughput_units": 2,
+      "auto_inflate": true,
+      "max_throughput_units": 10,
+      "path": "/yokogawa/server/",
+      "transports": [
+        "opc.tcp"
+      ],
+      "events": [
+        "DataChange",
+        "Events"
+      ],
+      "telemetry_topic": "ns=2;s=Yokogawa.CENTUM_VP",
+      "command_topic": "ns=2;s=Yokogawa.CENTUM_VP.Write",
+      "security_mode": "SignAndEncrypt",
+      "security_policy": "Basic256Sha256",
+      "scan_frequency_ms": 1000,
+      "deadband": 0.05,
+      "unit_id": 1,
+      "auth_type": "Username / Password",
+      "username": "oprex_operator",
+      "password": "password123"
+    }
+  ],
+  "integrations": [],
+  "alarms": [
+    {
+      "id": "alm-29daa1",
+      "rule_id": "rule-e029963a",
+      "alarm_name": "OIL TANK PRESSURE Trip Rule",
+      "tag_name": "TEST_1.tags.FIC_101.PV",
+      "source_asset": "OIL TANK",
+      "asset_id": "ast-907f0596",
+      "attribute_name": "PRESSURE",
+      "uom": "\u00b0C",
+      "state": "In Alarm Unacknowledged",
+      "severity": 650,
+      "priority": "High",
+      "trip_type": "High",
+      "current_value": 440.5,
+      "threshold_limit": 200.0,
+      "scan_rate_seconds": 10,
+      "class_type": "Process",
+      "message": "High warning threshold exceeded",
+      "occurred_at": "2026-10-11T06:40:25.415993Z",
+      "triggered_at": "2026-10-11T06:40:25.415993Z",
+      "notification_action_id": "",
+      "acknowledged_at": "2026-10-10T05:13:18.869362Z",
+      "acknowledged_by": "admin@local",
+      "updated_at": "2026-10-10T04:44:20.840586Z",
+      "cleared_at": "2026-10-10T05:44:47.193061Z",
+      "site_name": "ISUZU",
+      "area": "Fractionator Block A"
+    }
+  ],
+  "alarm_histories": [
+    {
+      "id": "hist-4ba083",
+      "alarm_id": "alm-29daa1",
+      "alarm_name": "CRITICAL STEAM HEADER OVERPRESSURE",
+      "source_signal": "TEST_1.tags.FIC_101.PV",
+      "asset_name": "OIL TANK",
+      "priority": "Urgent",
+      "severity": 950,
+      "cleared_at": "2026-10-10T04:44:20.843001Z",
+      "trail": [
+        {
+          "step": 1,
+          "state": "NORMAL_OPERATION",
+          "signal_value": 457.6,
+          "timestamp": "2026-10-10T04:23:18.257977Z",
+          "actor": "Sensor Telemetry",
+          "status_color": "#10b981"
+        },
+        {
+          "step": 2,
+          "state": "ALARM_TRIGGERED",
+          "signal_value": 457.6,
+          "timestamp": "2026-10-10T04:23:18.257977Z",
+          "actor": "Alarm Engine",
+          "status_color": "#ef4444"
+        },
+        {
+          "step": 3,
+          "state": "RETURN_TO_NORMAL",
+          "signal_value": 457.6,
+          "timestamp": "2026-10-10T04:44:20.843001Z",
+          "actor": "Auto Recovery",
+          "status_color": "#10b981"
+        }
+      ]
+    },
+    {
+      "id": "hist-6beab9",
+      "alarm_id": "alm-29daa1",
+      "alarm_name": "OIL TANK PRESSURE Trip Rule",
+      "source_signal": "TEST_1.tags.FIC_101.PV",
+      "asset_name": "OIL TANK",
+      "priority": "High",
+      "severity": 650,
+      "cleared_at": "2026-10-10T05:16:52.913158Z",
+      "trail": [
+        {
+          "step": 1,
+          "state": "NORMAL_OPERATION",
+          "signal_value": 451.6,
+          "timestamp": "2026-10-10T05:13:11.660683Z",
+          "actor": "Sensor Telemetry",
+          "status_color": "#10b981"
+        },
+        {
+          "step": 2,
+          "state": "ALARM_TRIGGERED",
+          "signal_value": 451.6,
+          "timestamp": "2026-10-10T05:13:11.660683Z",
+          "actor": "Alarm Engine",
+          "status_color": "#ef4444"
+        },
+        {
+          "step": 3,
+          "state": "RETURN_TO_NORMAL",
+          "signal_value": 451.6,
+          "timestamp": "2026-10-10T05:16:52.913158Z",
+          "actor": "Auto Recovery",
+          "status_color": "#10b981"
+        }
+      ]
+    },
+    {
+      "id": "hist-9ccee3",
+      "alarm_id": "alm-29daa1",
+      "alarm_name": "OIL TANK PRESSURE Trip Rule",
+      "source_signal": "TEST_1.tags.FIC_101.PV",
+      "asset_name": "OIL TANK",
+      "priority": "High",
+      "severity": 650,
+      "cleared_at": "2026-10-10T05:44:47.193061Z",
+      "trail": [
+        {
+          "step": 1,
+          "state": "NORMAL_OPERATION",
+          "signal_value": 457.9,
+          "timestamp": "2026-10-10T05:42:38.307559Z",
+          "actor": "Sensor Telemetry",
+          "status_color": "#10b981"
+        },
+        {
+          "step": 2,
+          "state": "ALARM_TRIGGERED",
+          "signal_value": 457.9,
+          "timestamp": "2026-10-10T05:42:38.307559Z",
+          "actor": "Alarm Engine",
+          "status_color": "#ef4444"
+        },
+        {
+          "step": 3,
+          "state": "RETURN_TO_NORMAL",
+          "signal_value": 457.9,
+          "timestamp": "2026-10-10T05:44:47.193061Z",
+          "actor": "Auto Recovery",
+          "status_color": "#10b981"
+        }
+      ]
+    }
+  ],
+  "alarm_rules": [
+    {
+      "id": "rule-e029963a",
+      "name": "OIL TANK PRESSURE Trip Rule",
+      "description": "",
+      "area": "Fractionator Block A",
+      "group": "Process Control",
+      "alarm_type": "Analog",
+      "class_type": "Process",
+      "source": "OIL TANK",
+      "signal": "PRESSURE",
+      "tag_name": "TEST_1.tags.FIC_101.PV",
+      "uom": "\u00b0C",
+      "current_value": 450.1,
+      "on_delay_seconds": 0,
+      "off_delay_seconds": 0,
+      "time_interval_seconds": 10,
+      "scan_rate_seconds": 10,
+      "required_acknowledge": true,
+      "high_high_threshold": 2000,
+      "high_high_priority": "Urgent",
+      "high_high_severity": 850,
+      "high_high_message": "High High process trip threshold exceeded!",
+      "high_threshold": 200,
+      "high_priority": "High",
+      "high_severity": 650,
+      "high_message": "High warning threshold exceeded",
+      "low_threshold": 1,
+      "low_priority": "Medium",
+      "low_severity": 350,
+      "low_message": "Low process limit warning",
+      "low_low_threshold": 0,
+      "low_low_priority": "Urgent",
+      "low_low_severity": 800,
+      "low_low_message": "Low Low emergency trip threshold exceeded",
+      "notification_action_id": "",
+      "forward_destination": "http://localhost:1880/alarms",
+      "asset_id": "ast-907f0596",
+      "attribute_name": "PRESSURE",
+      "updated_at": "2026-10-11T06:40:25.410951Z",
+      "enable_high": true,
+      "priority": "Urgent",
+      "severity": 950,
+      "message": "Custom Operator Directive: Vent Valve FV-101 immediately!",
+      "enable_high_high": false,
+      "enable_low": false,
+      "enable_low_low": false,
+      "site_name": "ISUZU"
+    }
+  ],
+  "alarm_actions": [
+    {
+      "id": "act-7424d78d",
+      "name": "Custom Plant Supervisor Notification Profile",
+      "type": "WhatsApp",
+      "to_contact": "+91 9652803034",
+      "attach_acknowledge_link": true,
+      "add_ahi_header_footer": true,
+      "content": "ALERT: {{alarm_name}} triggered with value {{current_value}} exceeding limit {{threshold_limit}}!",
+      "updated_at": "2026-10-12T02:27:08.270095Z",
+      "subject": "[ALARM TRIP] Emergency Notification"
+    }
+  ],
+  "converters": [],
+  "rule_chains": [
+    {
+      "id": "rc-root-01",
+      "name": "Root Industrial Telemetry Pipeline",
+      "description": "Default platform rule chain: Ingests telemetry, checks analog alarm trips, transforms engineering units, and stores to timeseries database.",
+      "is_root": true,
+      "status": "ACTIVE",
+      "nodes": [
+        {
+          "id": "node-in-1",
+          "type": "INPUT",
+          "name": "Inbound Telemetry Msg",
+          "category": "Input",
+          "x": 60,
+          "y": 140,
+          "details": "Topic: v1/devices/me/telemetry",
+          "configuration": {
+            "topic": "v1/devices/me/telemetry"
+          }
+        },
+        {
+          "id": "node-flt-1",
+          "type": "FILTER",
+          "name": "Script Message Filter",
+          "category": "Filter",
+          "x": 280,
+          "y": 140,
+          "details": "msg.temperature > 85 || msg.pressure > 250",
+          "configuration": {
+            "script": "return msg.temperature > 85 || msg.pressure > 250;"
+          }
+        },
+        {
+          "id": "node-trf-1",
+          "type": "TRANSFORM",
+          "name": "Unit Conversion (Script)",
+          "category": "Transformation",
+          "x": 520,
+          "y": 80,
+          "details": "Convert psi to kPa & \u00b0F to \u00b0C",
+          "configuration": {
+            "script": "msg.pressure_kpa = msg.pressure * 6.894; return {msg: msg};"
+          }
+        },
+        {
+          "id": "node-act-1",
+          "type": "ACTION",
+          "name": "Save Timeseries",
+          "category": "Action",
+          "x": 780,
+          "y": 80,
+          "details": "Persist in Timeseries DB",
+          "configuration": {
+            "ttl": 86400,
+            "skip_latest": false
+          }
+        },
+        {
+          "id": "node-alm-1",
+          "type": "ACTION",
+          "name": "Create Process Alarm",
+          "category": "Action",
+          "x": 780,
+          "y": 240,
+          "details": "ISA-18.2 High-High Emergency Trip",
+          "configuration": {
+            "alarm_type": "High Temperature Trip",
+            "severity": "CRITICAL",
+            "propagate": true
+          }
+        },
+        {
+          "id": "node-fwd-1",
+          "type": "ACTION",
+          "name": "External Webhook Dispatch",
+          "category": "Action",
+          "x": 1020,
+          "y": 240,
+          "details": "Forward to Node-RED (:1880)",
+          "configuration": {
+            "endpoint": "http://127.0.0.1:1880/telemetry",
+            "method": "POST"
+          }
+        }
+      ],
+      "connections": [
+        {
+          "from": "node-in-1",
+          "to": "node-flt-1",
+          "label": "Success"
+        },
+        {
+          "from": "node-flt-1",
+          "to": "node-trf-1",
+          "label": "True"
+        },
+        {
+          "from": "node-flt-1",
+          "to": "node-act-1",
+          "label": "False"
+        },
+        {
+          "from": "node-trf-1",
+          "to": "node-alm-1",
+          "label": "Success"
+        },
+        {
+          "from": "node-alm-1",
+          "to": "node-fwd-1",
+          "label": "Alarm Created"
+        }
+      ]
+    },
+    {
+      "id": "rc-nodered-02",
+      "name": "Node-RED & n8n Automation Bridge",
+      "description": "Dispatches high-frequency sensor streams to external workflow engines with payload flattening.",
+      "is_root": false,
+      "status": "ACTIVE",
+      "nodes": [
+        {
+          "id": "node-in-2",
+          "type": "INPUT",
+          "name": "MQTT Broker Stream",
+          "category": "Input",
+          "x": 60,
+          "y": 140,
+          "details": "Broker: Port 91 / 1883",
+          "configuration": {
+            "broker": "brk-1"
+          }
+        },
+        {
+          "id": "node-flt-2",
+          "type": "FILTER",
+          "name": "Asset Scope Filter",
+          "category": "Filter",
+          "x": 300,
+          "y": 140,
+          "details": "Scope: Fractionator CDU-101",
+          "configuration": {
+            "asset": "ast-unit-cdu"
+          }
+        },
+        {
+          "id": "node-trf-2",
+          "type": "TRANSFORM",
+          "name": "JSON Schema Normalizer",
+          "category": "Transformation",
+          "x": 560,
+          "y": 140,
+          "details": "Flat Key-Value Map",
+          "configuration": {
+            "flatten": true
+          }
+        },
+        {
+          "id": "node-fwd-2",
+          "type": "ACTION",
+          "name": "Node-RED HTTP In",
+          "category": "Action",
+          "x": 820,
+          "y": 140,
+          "details": "http://localhost:1880/telemetry",
+          "configuration": {
+            "endpoint": "http://127.0.0.1:1880/telemetry"
+          }
+        }
+      ],
+      "connections": [
+        {
+          "from": "node-in-2",
+          "to": "node-flt-2",
+          "label": "Success"
+        },
+        {
+          "from": "node-flt-2",
+          "to": "node-trf-2",
+          "label": "Matched"
+        },
+        {
+          "from": "node-trf-2",
+          "to": "node-fwd-2",
+          "label": "Dispatched"
+        }
+      ]
+    },
+    {
+      "id": "rc-kpi-03",
+      "name": "Real-time KPI Derivations & Plant Efficiency Pipeline",
+      "description": "Event-driven calculation pipeline: Ingests asset telemetry, filters running mode, computes derived plant KPIs (OEE, Thermal Efficiency, SEC), stores to asset attributes and historian, and raises alarm on performance degradation.",
+      "is_root": false,
+      "status": "ACTIVE",
+      "nodes": [
+        {
+          "id": "node-kpi-in-1",
+          "type": "INPUT",
+          "name": "Asset Telemetry & Production Ingress",
+          "category": "INPUT",
+          "x": 60,
+          "y": 180,
+          "details": "Topic: v1/devices/me/telemetry",
+          "configuration": {
+            "topic": "v1/devices/me/telemetry"
+          }
+        },
+        {
+          "id": "node-kpi-flt-1",
+          "type": "FILTER",
+          "name": "Filter Operating Mode (RUNNING)",
+          "category": "FILTER",
+          "x": 280,
+          "y": 180,
+          "details": "Exclude trips & offline states",
+          "configuration": {
+            "script": "return msg.status !== 'STOPPED' && msg.status !== 'TRIP';"
+          }
+        },
+        {
+          "id": "node-kpi-enr-1",
+          "type": "ENRICHMENT",
+          "name": "Enrich Asset Nameplate & Targets",
+          "category": "ENRICHMENT",
+          "x": 520,
+          "y": 180,
+          "details": "Design capacity (1000 u/d) & targets",
+          "configuration": {
+            "selectedFields": [
+              "design_capacity",
+              "target_efficiency",
+              "unit_name"
+            ]
+          }
+        },
+        {
+          "id": "node-kpi-trf-1",
+          "type": "TRANSFORM",
+          "name": "KPI Derivation Calculator (OEE & Efficiency)",
+          "category": "TRANSFORM",
+          "x": 760,
+          "y": 180,
+          "details": "Derives OEE % and Thermal Efficiency %",
+          "configuration": {
+            "kpi_type": "OEE_AND_EFFICIENCY",
+            "script": "const runHours = Number(msg.run_hours || 24);\nconst plannedHours = Number(msg.planned_hours || 24);\nconst avail = Math.min(1.0, runHours / Math.max(plannedHours, 1));\n\nconst prod = Number(msg.production_count || msg.throughput || 930);\nconst cap = Number(msg.target_capacity || 1000);\nconst perf = Math.min(1.0, prod / Math.max(cap, 1));\n\nconst good = Number(msg.good_count || (prod - (msg.defect_count || 10)));\nconst qual = prod > 0 ? (good / prod) : 1.0;\n\nconst oee = Number((avail * perf * qual * 100).toFixed(2));\nconst heatRec = Number(msg.heat_recovered || msg['TIC_102.PV'] || 76.4);\nconst heatIn = Number(msg.heat_input || msg['TIC_101.PV'] || 89.2);\nconst eff = Number((heatRec / Math.max(heatIn, 1) * 100).toFixed(2));\n\nmsg.oee_percent = oee;\nmsg.thermal_efficiency = eff;\nmsg.availability_ratio = Number(avail.toFixed(3));\nmsg.performance_ratio = Number(perf.toFixed(3));\nmsg.quality_ratio = Number(qual.toFixed(3));\nmsg.kpi_calculated_at = new Date().toISOString();\n\nreturn { msg: msg, metadata: metadata, msgType: msgType };"
+          }
+        },
+        {
+          "id": "node-kpi-act-attr",
+          "type": "ACTION",
+          "name": "Save Derived KPI Attributes to Asset",
+          "category": "ACTION",
+          "x": 1020,
+          "y": 90,
+          "details": "Updates live asset attributes (oee_percent, thermal_efficiency)",
+          "configuration": {
+            "scope": "SERVER_SCOPE"
+          }
+        },
+        {
+          "id": "node-kpi-act-ts",
+          "type": "ACTION",
+          "name": "Save KPI Timeseries Historian",
+          "category": "ACTION",
+          "x": 1020,
+          "y": 210,
+          "details": "Stores high-resolution derived KPI curve in Timeseries DB",
+          "configuration": {
+            "ttl": 86400,
+            "skip_latest": false
+          }
+        },
+        {
+          "id": "node-kpi-flt-low",
+          "type": "FILTER",
+          "name": "Check Low OEE Performance (< 75%)",
+          "category": "FILTER",
+          "x": 1020,
+          "y": 330,
+          "details": "Alert if derived OEE drops below 75%",
+          "configuration": {
+            "script": "return msg.oee_percent < 75.0;"
+          }
+        },
+        {
+          "id": "node-kpi-alm-1",
+          "type": "ACTION",
+          "name": "Create Low OEE Process Alarm",
+          "category": "ACTION",
+          "x": 1280,
+          "y": 330,
+          "details": "ISA-18.2 Warning: Overall Equipment Effectiveness Degraded",
+          "configuration": {
+            "alarm_type": "Low OEE Degradation Alarm",
+            "severity": "WARNING",
+            "propagate": true
+          }
+        }
+      ],
+      "connections": [
+        {
+          "from": "node-kpi-in-1",
+          "to": "node-kpi-flt-1",
+          "label": "Success"
+        },
+        {
+          "from": "node-kpi-flt-1",
+          "to": "node-kpi-enr-1",
+          "label": "True"
+        },
+        {
+          "from": "node-kpi-enr-1",
+          "to": "node-kpi-trf-1",
+          "label": "Success"
+        },
+        {
+          "from": "node-kpi-trf-1",
+          "to": "node-kpi-act-attr",
+          "label": "Success"
+        },
+        {
+          "from": "node-kpi-trf-1",
+          "to": "node-kpi-act-ts",
+          "label": "Success"
+        },
+        {
+          "from": "node-kpi-trf-1",
+          "to": "node-kpi-flt-low",
+          "label": "Success"
+        },
+        {
+          "from": "node-kpi-flt-low",
+          "to": "node-kpi-alm-1",
+          "label": "True"
+        }
+      ]
+    },
+    {
+      "id": "rc-4da16eca",
+      "name": "Crude Distillation Unit Emergency Guard Chain",
+      "description": "Monitors CDU pressures and temperatures, calculating unit yields and raising alarms.",
+      "category": "Process Safety",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "HighPriority",
+      "enabled": true,
+      "status": "ACTIVE",
+      "version": "1.0.1",
+      "nodes": [
+        {
+          "id": "node-in-694f6f",
+          "type": "INPUT",
+          "name": "Inbound Telemetry Ingress",
+          "x": 80,
+          "y": 180,
+          "configuration": {
+            "input_message_types": [
+              "POST_TELEMETRY_REQUEST",
+              "POST_ATTRIBUTES_REQUEST"
+            ]
+          }
+        }
+      ],
+      "connections": [],
+      "created_at": "2026-10-11T07:09:05.114279Z",
+      "updated_at": "2026-10-11T07:09:05.126185Z",
+      "nodes_count": 1
+    },
+    {
+      "id": "rc-test-filter",
+      "name": "New Process Rule Chain",
+      "description": "User-defined industrial telemetry processing pipeline",
+      "category": "General",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "Main",
+      "enabled": true,
+      "status": "DRAFT",
+      "version": "1.0.0",
+      "nodes": [
+        {
+          "id": "node-in",
+          "type": "INPUT",
+          "name": "Input"
+        },
+        {
+          "id": "node-filter-1",
+          "type": "CUSTOM_JS_FILTER",
+          "name": "Custom JS Pressure Filter",
+          "configuration": {
+            "script": "function filter(msg, metadata, msgType) { return Number(msg.pressure) > 100.0; }"
+          }
+        },
+        {
+          "id": "node-true",
+          "type": "ACTION",
+          "name": "True Action"
+        },
+        {
+          "id": "node-false",
+          "type": "ACTION",
+          "name": "False Action"
+        }
+      ],
+      "connections": [
+        {
+          "from": "node-in",
+          "to": "node-filter-1",
+          "label": "Success"
+        },
+        {
+          "from": "node-filter-1",
+          "to": "node-true",
+          "label": "True"
+        },
+        {
+          "from": "node-filter-1",
+          "to": "node-false",
+          "label": "False"
+        }
+      ],
+      "created_at": "2026-10-11T07:11:12.221693Z",
+      "updated_at": "2026-10-11T07:11:12.221693Z",
+      "nodes_count": 4
+    },
+    {
+      "id": "rc-test-fb-exec",
+      "name": "New Process Rule Chain",
+      "description": "User-defined industrial telemetry processing pipeline",
+      "category": "General",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "Main",
+      "enabled": true,
+      "status": "DRAFT",
+      "version": "1.0.0",
+      "nodes": [
+        {
+          "id": "node-in",
+          "type": "INPUT",
+          "name": "Input"
+        },
+        {
+          "id": "node-exec-fb",
+          "type": "EXECUTE_FUNCTION_BLOCK",
+          "name": "Invoke Pump KPI Block",
+          "configuration": {
+            "block_id": "cfb-pump-kpi-01",
+            "persist_kpi": false
+          }
+        },
+        {
+          "id": "node-downstream",
+          "type": "ACTION",
+          "name": "Downstream Action"
+        }
+      ],
+      "connections": [
+        {
+          "from": "node-in",
+          "to": "node-exec-fb",
+          "label": "Success"
+        },
+        {
+          "from": "node-exec-fb",
+          "to": "node-downstream",
+          "label": "Success"
+        }
+      ],
+      "created_at": "2026-10-11T07:11:12.400164Z",
+      "updated_at": "2026-10-11T07:11:12.400164Z",
+      "nodes_count": 3
+    },
+    {
+      "id": "rc-6dd503a7",
+      "name": "Crude Distillation Unit Emergency Guard Chain",
+      "description": "Monitors CDU pressures and temperatures, calculating unit yields and raising alarms.",
+      "category": "Process Safety",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "HighPriority",
+      "enabled": true,
+      "status": "ACTIVE",
+      "version": "1.0.1",
+      "nodes": [
+        {
+          "id": "node-in-d5bb34",
+          "type": "INPUT",
+          "name": "Inbound Telemetry Ingress",
+          "x": 80,
+          "y": 180,
+          "configuration": {
+            "input_message_types": [
+              "POST_TELEMETRY_REQUEST",
+              "POST_ATTRIBUTES_REQUEST"
+            ]
+          }
+        }
+      ],
+      "connections": [],
+      "created_at": "2026-10-11T07:10:06.367358Z",
+      "updated_at": "2026-10-11T07:10:06.378787Z",
+      "nodes_count": 1
+    },
+    {
+      "id": "rc-test-loop",
+      "name": "New Process Rule Chain",
+      "description": "User-defined industrial telemetry processing pipeline",
+      "category": "General",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "Main",
+      "enabled": true,
+      "status": "DRAFT",
+      "version": "1.0.0",
+      "nodes": [
+        {
+          "id": "n1",
+          "type": "INPUT",
+          "name": "Start"
+        },
+        {
+          "id": "n2",
+          "type": "ACTION",
+          "name": "Loop Step A"
+        },
+        {
+          "id": "n3",
+          "type": "ACTION",
+          "name": "Loop Step B"
+        }
+      ],
+      "connections": [
+        {
+          "from": "n1",
+          "to": "n2",
+          "label": "Success"
+        },
+        {
+          "from": "n2",
+          "to": "n3",
+          "label": "Success"
+        },
+        {
+          "from": "n3",
+          "to": "n2",
+          "label": "Success"
+        }
+      ],
+      "created_at": "2026-10-11T07:11:13.283224Z",
+      "updated_at": "2026-10-11T07:11:13.283224Z",
+      "nodes_count": 3
+    },
+    {
+      "id": "rc-82cfe5a1",
+      "name": "Crude Distillation Unit Emergency Guard Chain",
+      "description": "Monitors CDU pressures and temperatures, calculating unit yields and raising alarms.",
+      "category": "Process Safety",
+      "project_id": "prj-default",
+      "is_root": false,
+      "default_queue": "HighPriority",
+      "enabled": true,
+      "status": "ACTIVE",
+      "version": "1.0.1",
+      "nodes": [
+        {
+          "id": "node-in-e2b922",
+          "type": "INPUT",
+          "name": "Inbound Telemetry Ingress",
+          "x": 80,
+          "y": 180,
+          "configuration": {
+            "input_message_types": [
+              "POST_TELEMETRY_REQUEST",
+              "POST_ATTRIBUTES_REQUEST"
+            ]
+          }
+        }
+      ],
+      "connections": [],
+      "created_at": "2026-10-11T07:11:12.186365Z",
+      "updated_at": "2026-10-11T07:11:12.203690Z",
+      "nodes_count": 1
+    },
+    {
+      "id": "rc-5a1219e9",
+      "name": "New Telemetry Processing Pipeline",
+      "description": "Ingests sensor telemetry, performs custom calculations, and dispatches actions.",
+      "category": "General",
+      "project_id": "Yokogawa Refinery Unit A",
+      "is_root": false,
+      "default_queue": "Main",
+      "enabled": true,
+      "status": "DRAFT",
+      "version": "1.0.0",
+      "nodes": [
+        {
+          "id": "node-in-23d76c",
+          "type": "INPUT",
+          "name": "Inbound Telemetry Ingress",
+          "x": 80,
+          "y": 180,
+          "configuration": {
+            "input_message_types": [
+              "POST_TELEMETRY_REQUEST",
+              "POST_ATTRIBUTES_REQUEST"
+            ]
+          }
+        }
+      ],
+      "connections": [],
+      "created_at": "2026-10-11T07:13:52.347038Z",
+      "updated_at": "2026-10-11T07:13:52.347038Z",
+      "nodes_count": 1
+    }
+  ],
+  "function_blocks": [
+    {
+      "id": "fb-001",
+      "name": "CDU Fractionation Column Thermal Delta T",
+      "template_code": "FB_DELTA_T",
+      "template_name": "Distillation Column Thermal Delta",
+      "category": "Calculation",
+      "asset_id": "ast-unit-cdu",
+      "asset_name": "Atmospheric Distillation Unit C-101",
+      "target_tag": "CDU_101.DELTA_T",
+      "schedule_interval": "1s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:19.383143Z",
+      "last_execution_ms": 2.8,
+      "last_output_value": 117.2,
+      "last_output_data": {
+        "delta_t": 117.2,
+        "gradient_status": "NORMAL"
+      },
+      "input_bindings": {
+        "t_overhead": "TIC_101.PV",
+        "t_reboiler": "TIC_102.PV"
+      },
+      "formula_code": "function execute(inputs) {\n  const top = Number(inputs.t_overhead || 118.0);\n  const bot = Number(inputs.t_reboiler || 235.0);\n  const dt = Number((bot - top).toFixed(2));\n  let status = 'NORMAL';\n  if (dt > 140.0) status = 'OVERHEATED_REBOILER';\n  else if (dt < 90.0) status = 'FLOODING_SUSPECTED';\n  return { delta_t: dt, gradient_status: status };\n}",
+      "execution_log": "Computed delta_t = 117.2\u00b0C; Status: NORMAL"
+    },
+    {
+      "id": "fb-002",
+      "name": "CDU Process Multivariate MT Anomaly Detector",
+      "template_code": "FB_MT_ANOMALY",
+      "template_name": "Mahalanobis-Taguchi Multivariate Anomaly",
+      "category": "Analytics",
+      "asset_id": "ast-unit-cdu",
+      "asset_name": "Atmospheric Distillation Unit C-101",
+      "target_tag": "CDU_101.MT_DISTANCE",
+      "schedule_interval": "5s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:19.383143Z",
+      "last_execution_ms": 4.1,
+      "last_output_value": 1.42,
+      "last_output_data": {
+        "mt_distance": 1.42,
+        "is_anomaly": false,
+        "health_status": "NORMAL"
+      },
+      "input_bindings": {
+        "temp_top": "TIC_101.PV",
+        "temp_bottom": "TIC_102.PV",
+        "pressure": "PIC_101.PV",
+        "vibration": "VIB_101.RMS"
+      },
+      "formula_code": "function execute(inputs) {\n  const top = Number(inputs.temp_top || 118.0);\n  const bot = Number(inputs.temp_bottom || 235.0);\n  const press = Number(inputs.pressure || 145.0);\n  const vib = Number(inputs.vibration || 2.1);\n  const z_top = (top - 118.0) / 4.5;\n  const z_bot = (bot - 235.0) / 6.2;\n  const z_press = (press - 145.0) / 5.0;\n  const z_vib = (vib - 2.1) / 0.4;\n  const mt_sq = (z_top*z_top + z_bot*z_bot + z_press*z_press + z_vib*z_vib) / 4.0;\n  const mt_distance = Number(Math.sqrt(mt_sq).toFixed(2));\n  const is_anomaly = mt_distance > 3.0;\n  return {\n    mt_distance: mt_distance,\n    is_anomaly: is_anomaly,\n    health_status: is_anomaly ? 'ANOMALY_DETECTED' : 'NORMAL'\n  };\n}",
+      "execution_log": "MT Distance score: 1.42 (Threshold 3.0). Health status: NORMAL"
+    },
+    {
+      "id": "fb-003",
+      "name": "Charge Pump P-101A Hydraulic Differential Head",
+      "template_code": "FB_PUMP_HEAD",
+      "template_name": "API 610 Centrifugal Pump Head Calculation",
+      "category": "Calculation",
+      "asset_id": "ast-eq-pump",
+      "asset_name": "Crude Feed Charge Pump P-101A",
+      "target_tag": "PUMP_101A.DIFF_HEAD",
+      "schedule_interval": "1s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:19.383143Z",
+      "last_execution_ms": 1.9,
+      "last_output_value": 55.45,
+      "last_output_data": {
+        "differential_head_m": 55.45,
+        "hydraulic_power_kw": 57.24,
+        "pump_operating_point": "OPTIMAL"
+      },
+      "input_bindings": {
+        "p_suction": "pump-p101a-hub-01.suction_pressure",
+        "p_discharge": "pump-p101a-hub-01.discharge_pressure",
+        "fluid_density": "pump-p101a-hub-01.fluid_density",
+        "flow_rate": "FIC_101.PV"
+      },
+      "formula_code": "function execute(inputs) {\n  const ps = Number(inputs.p_suction || 124.5);\n  const pd = Number(inputs.p_discharge || 582.4);\n  const rho = Number(inputs.fluid_density || 842.0);\n  const q = Number(inputs.flow_rate || 450.0);\n  const g = 9.80665;\n  const deltaP = (pd - ps) * 1000;\n  const head = deltaP / (rho * g);\n  const q_m3s = q / 3600;\n  const hyd_kw = (rho * g * q_m3s * head) / 1000;\n  return {\n    differential_head_m: Number(head.toFixed(2)),\n    hydraulic_power_kw: Number(hyd_kw.toFixed(2)),\n    pump_operating_point: head > 60 ? 'OPTIMAL' : 'BELOW_BEP'\n  };\n}",
+      "execution_log": "Head: 55.45 m, Hydraulic Power: 57.24 kW. Operating point: OPTIMAL"
+    },
+    {
+      "id": "fb-004",
+      "name": "CDU Top Reflux Flow Totalizer",
+      "template_code": "FB_TOTALIZER",
+      "template_name": "Flow Totalizer & Batch Accumulator",
+      "category": "Calculation",
+      "asset_id": "ast-unit-cdu",
+      "asset_name": "Atmospheric Distillation Unit C-101",
+      "target_tag": "FIC_102.TOTAL_M3",
+      "schedule_interval": "1s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:19.383143Z",
+      "last_execution_ms": 1.4,
+      "last_output_value": 4380.55,
+      "last_output_data": {
+        "accumulated_m3": 4380.55,
+        "daily_projected_m3": 4368.0
+      },
+      "input_bindings": {
+        "flow_rate_m3h": "FIC_102.PV",
+        "sample_interval_sec": "1.0",
+        "reset": "false"
+      },
+      "formula_code": "function execute(inputs) {\n  const flow = Number(inputs.flow_rate_m3h || 182.0);\n  const dt = Number(inputs.sample_interval_sec || 1.0);\n  const incremental = (flow / 3600.0) * dt;\n  const accumulated = Number((4380.5 + incremental).toFixed(3));\n  const projected = Number((flow * 24.0).toFixed(1));\n  return {\n    accumulated_m3: accumulated,\n    daily_projected_m3: projected\n  };\n}",
+      "execution_log": "Accumulated: 4380.55 m3, Projected 24h: 4368.0 m3"
+    },
+    {
+      "id": "fb-kpi-001",
+      "name": "CDU Atmospheric Column Overall Equipment Effectiveness (OEE)",
+      "template_code": "FB_KPI_OEE",
+      "template_name": "Overall Equipment Effectiveness (OEE) Metric Derivation",
+      "category": "KPI Analytics",
+      "asset_id": "ast-unit-cdu",
+      "asset_name": "Atmospheric Distillation Unit C-101",
+      "target_tag": "CDU_101.OEE",
+      "schedule_interval": "5s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:19.383143Z",
+      "last_execution_ms": 2.1,
+      "last_output_value": 92.83,
+      "last_output_data": {
+        "oee_percent": 92.83,
+        "availability": 1.0,
+        "performance": 0.94,
+        "quality": 0.987
+      },
+      "input_bindings": {
+        "run_hours": "24",
+        "planned_hours": "24",
+        "production_count": "940",
+        "target_capacity": "1000",
+        "defect_count": "12"
+      },
+      "formula_code": "function execute(inputs) {\n  const runHours = Number(inputs.run_hours || 24);\n  const plannedHours = Number(inputs.planned_hours || 24);\n  const avail = Math.min(1.0, runHours / Math.max(plannedHours, 1));\n  const prod = Number(inputs.production_count || 940);\n  const cap = Number(inputs.target_capacity || 1000);\n  const perf = Math.min(1.0, prod / Math.max(cap, 1));\n  const defects = Number(inputs.defect_count || 12);\n  const good = Math.max(0, prod - defects);\n  const qual = prod > 0 ? (good / prod) : 1.0;\n  const oee = Number((avail * perf * qual * 100).toFixed(2));\n  return {\n    oee_percent: oee,\n    availability: Number(avail.toFixed(3)),\n    performance: Number(perf.toFixed(3)),\n    quality: Number(qual.toFixed(3))\n  };\n}",
+      "execution_log": "Calculated OEE: 92.83% (Avail: 1.0, Perf: 0.94, Qual: 0.987). Status: OPTIMAL"
+    },
+    {
+      "id": "fb-a4a3a4",
+      "name": "Custom Heat Rate & Yield KPI Block",
+      "template_code": "FB_KPI_EFFICIENCY",
+      "template_name": "Fractionation & Heat Exchanger Thermal Efficiency KPI",
+      "category": "KPI Analytics",
+      "asset_id": "ast-unit-cdu",
+      "asset_name": "Atmospheric Distillation Unit C-101",
+      "target_tag": "CDU_101.EFFICIENCY_KPI",
+      "schedule_interval": "1s",
+      "status": "ACTIVE",
+      "last_run_at": "2026-10-11T05:45:50.922171Z",
+      "last_execution_ms": 69.92,
+      "last_output_value": 85.65,
+      "last_output_data": {
+        "thermal_efficiency_pct": 85.65,
+        "sec_kwh_per_m3": 0.711,
+        "efficiency_grade": "TIER_1_EXCELLENT"
+      },
+      "input_bindings": {
+        "heat_recovered_mw": "76.4",
+        "heat_input_mw": "89.2",
+        "throughput_m3h": "450.0",
+        "power_consumed_kwh": "320.0"
+      },
+      "formula_code": "function execute(inputs) {\n  const q_rec = Number(inputs.heat_recovered_mw || 76.4);\n  const q_in = Number(inputs.heat_input_mw || 89.2);\n  const eff = q_in > 0 ? Number((q_rec / q_in * 100).toFixed(2)) : 0;\n  const q_flow = Number(inputs.throughput_m3h || 450.0);\n  const power = Number(inputs.power_consumed_kwh || 320.0);\n  const sec = q_flow > 0 ? Number((power / q_flow).toFixed(3)) : 0;\n  const grade = eff >= 85 ? 'TIER_1_EXCELLENT' : (eff >= 75 ? 'TIER_2_ACCEPTABLE' : 'TIER_3_DEGRADED');\n  return {\n    thermal_efficiency_pct: eff,\n    sec_kwh_per_m3: sec,\n    efficiency_grade: grade\n  };\n}",
+      "execution_log": "OK: {\"thermal_efficiency_pct\": 85.65, \"sec_kwh_per_m3\": 0.711, \"efficiency_grade\": \"TIER_1_EXCELLENT\"}"
+    }
+  ],
+  "function_block_templates": [
+    {
+      "id": "fbt-1",
+      "template_code": "FB_DELTA_T",
+      "name": "Distillation Column Thermal Delta",
+      "category": "Calculation",
+      "description": "Computes vertical temperature gradient across fractionation trays for vapor-liquid separation control.",
+      "inputs_schema": [
+        {
+          "name": "t_reboiler",
+          "type": "Float",
+          "unit": "\u00b0C",
+          "default": 235.0
+        },
+        {
+          "name": "t_overhead",
+          "type": "Float",
+          "unit": "\u00b0C",
+          "default": 118.0
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "delta_t",
+          "type": "Float",
+          "unit": "\u00b0C"
+        },
+        {
+          "name": "gradient_status",
+          "type": "String",
+          "unit": ""
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const top = Number(inputs.t_overhead || 118.0);\n  const bot = Number(inputs.t_reboiler || 235.0);\n  const dt = Number((bot - top).toFixed(2));\n  let status = 'NORMAL';\n  if (dt > 140.0) status = 'OVERHEATED_REBOILER';\n  else if (dt < 90.0) status = 'FLOODING_SUSPECTED';\n  return { delta_t: dt, gradient_status: status };\n}",
+      "version": "v2.0"
+    },
+    {
+      "id": "fbt-2",
+      "template_code": "FB_MT_ANOMALY",
+      "name": "Mahalanobis-Taguchi Multivariate Anomaly",
+      "category": "Analytics",
+      "description": "Calculates normalized multivariate Mahalanobis distance from baseline covariance matrix to detect early process anomalies.",
+      "inputs_schema": [
+        {
+          "name": "temp_top",
+          "type": "Float",
+          "unit": "\u00b0C",
+          "default": 118.0
+        },
+        {
+          "name": "temp_bottom",
+          "type": "Float",
+          "unit": "\u00b0C",
+          "default": 235.0
+        },
+        {
+          "name": "pressure",
+          "type": "Float",
+          "unit": "kPa",
+          "default": 145.0
+        },
+        {
+          "name": "vibration",
+          "type": "Float",
+          "unit": "mm/s",
+          "default": 2.1
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "mt_distance",
+          "type": "Float",
+          "unit": "score"
+        },
+        {
+          "name": "is_anomaly",
+          "type": "Boolean",
+          "unit": ""
+        },
+        {
+          "name": "health_status",
+          "type": "String",
+          "unit": ""
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const top = Number(inputs.temp_top || 118.0);\n  const bot = Number(inputs.temp_bottom || 235.0);\n  const press = Number(inputs.pressure || 145.0);\n  const vib = Number(inputs.vibration || 2.1);\n  const z_top = (top - 118.0) / 4.5;\n  const z_bot = (bot - 235.0) / 6.2;\n  const z_press = (press - 145.0) / 5.0;\n  const z_vib = (vib - 2.1) / 0.4;\n  const mt_sq = (z_top*z_top + z_bot*z_bot + z_press*z_press + z_vib*z_vib) / 4.0;\n  const mt_distance = Number(Math.sqrt(mt_sq).toFixed(2));\n  const is_anomaly = mt_distance > 3.0;\n  return {\n    mt_distance: mt_distance,\n    is_anomaly: is_anomaly,\n    health_status: is_anomaly ? 'ANOMALY_DETECTED' : 'NORMAL'\n  };\n}",
+      "version": "v2.1"
+    },
+    {
+      "id": "fbt-3",
+      "template_code": "FB_PUMP_HEAD",
+      "name": "API 610 Centrifugal Pump Head Calculation",
+      "category": "Calculation",
+      "description": "Calculates pump differential head (meters) and estimated hydraulic power (kW) from suction/discharge pressures.",
+      "inputs_schema": [
+        {
+          "name": "p_suction",
+          "type": "Float",
+          "unit": "kPa",
+          "default": 124.5
+        },
+        {
+          "name": "p_discharge",
+          "type": "Float",
+          "unit": "kPa",
+          "default": 582.4
+        },
+        {
+          "name": "fluid_density",
+          "type": "Float",
+          "unit": "kg/m\u00b3",
+          "default": 842.0
+        },
+        {
+          "name": "flow_rate",
+          "type": "Float",
+          "unit": "m\u00b3/h",
+          "default": 450.0
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "differential_head_m",
+          "type": "Float",
+          "unit": "m"
+        },
+        {
+          "name": "hydraulic_power_kw",
+          "type": "Float",
+          "unit": "kW"
+        },
+        {
+          "name": "pump_operating_point",
+          "type": "String",
+          "unit": ""
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const ps = Number(inputs.p_suction || 124.5);\n  const pd = Number(inputs.p_discharge || 582.4);\n  const rho = Number(inputs.fluid_density || 842.0);\n  const q = Number(inputs.flow_rate || 450.0);\n  const g = 9.80665;\n  const deltaP = (pd - ps) * 1000;\n  const head = deltaP / (rho * g);\n  const q_m3s = q / 3600;\n  const hyd_kw = (rho * g * q_m3s * head) / 1000;\n  return {\n    differential_head_m: Number(head.toFixed(2)),\n    hydraulic_power_kw: Number(hyd_kw.toFixed(2)),\n    pump_operating_point: head > 60 ? 'OPTIMAL' : 'BELOW_BEP'\n  };\n}",
+      "version": "v1.2"
+    },
+    {
+      "id": "fbt-4",
+      "template_code": "FB_PID_V2",
+      "name": "Yokogawa 2-Degrees-of-Freedom Velocity PID",
+      "category": "Control",
+      "description": "Industrial velocity-form discrete PID controller with proportional band, reset time and derivative rate limit.",
+      "inputs_schema": [
+        {
+          "name": "pv",
+          "type": "Float",
+          "unit": "",
+          "default": 118.2
+        },
+        {
+          "name": "sp",
+          "type": "Float",
+          "unit": "",
+          "default": 120.0
+        },
+        {
+          "name": "pb",
+          "type": "Float",
+          "unit": "%",
+          "default": 80.0
+        },
+        {
+          "name": "ti",
+          "type": "Float",
+          "unit": "s",
+          "default": 45.0
+        },
+        {
+          "name": "td",
+          "type": "Float",
+          "unit": "s",
+          "default": 8.0
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "mv",
+          "type": "Float",
+          "unit": "%"
+        },
+        {
+          "name": "error",
+          "type": "Float",
+          "unit": ""
+        },
+        {
+          "name": "control_mode",
+          "type": "String",
+          "unit": ""
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const pv = Number(inputs.pv || 118.2);\n  const sp = Number(inputs.sp || 120.0);\n  const pb = Number(inputs.pb || 80.0);\n  const ti = Number(inputs.ti || 45.0);\n  const err = sp - pv;\n  const gain = 100.0 / Math.max(pb, 1.0);\n  let mv = 50.0 + gain * err + (err / Math.max(ti, 1.0)) * 2.0;\n  mv = Math.min(100.0, Math.max(0.0, mv));\n  return {\n    mv: Number(mv.toFixed(2)),\n    error: Number(err.toFixed(2)),\n    control_mode: 'AUTO'\n  };\n}",
+      "version": "v3.0"
+    },
+    {
+      "id": "fbt-5",
+      "template_code": "FB_TOTALIZER",
+      "name": "Flow Totalizer & Batch Accumulator",
+      "category": "Calculation",
+      "description": "Integrates instantaneous mass flow rate into total accumulated batch volume with automatic reset.",
+      "inputs_schema": [
+        {
+          "name": "flow_rate_m3h",
+          "type": "Float",
+          "unit": "m\u00b3/h",
+          "default": 182.0
+        },
+        {
+          "name": "sample_interval_sec",
+          "type": "Float",
+          "unit": "s",
+          "default": 1.0
+        },
+        {
+          "name": "reset",
+          "type": "Boolean",
+          "unit": "",
+          "default": false
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "accumulated_m3",
+          "type": "Float",
+          "unit": "m\u00b3"
+        },
+        {
+          "name": "daily_projected_m3",
+          "type": "Float",
+          "unit": "m\u00b3"
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const flow = Number(inputs.flow_rate_m3h || 182.0);\n  const dt = Number(inputs.sample_interval_sec || 1.0);\n  const incremental = (flow / 3600.0) * dt;\n  const accumulated = Number((4380.5 + incremental).toFixed(3));\n  const projected = Number((flow * 24.0).toFixed(1));\n  return {\n    accumulated_m3: accumulated,\n    daily_projected_m3: projected\n  };\n}",
+      "version": "v1.1"
+    },
+    {
+      "id": "fbt-6",
+      "template_code": "FB_KPI_OEE",
+      "name": "Overall Equipment Effectiveness (OEE) KPI Derivation",
+      "category": "KPI Analytics",
+      "description": "Computes plant OEE % (Availability \u00d7 Performance \u00d7 Quality) and sub-indices from operating hours, production count, and defect rates.",
+      "inputs_schema": [
+        {
+          "name": "run_hours",
+          "type": "Float",
+          "unit": "h",
+          "default": 24.0
+        },
+        {
+          "name": "planned_hours",
+          "type": "Float",
+          "unit": "h",
+          "default": 24.0
+        },
+        {
+          "name": "production_count",
+          "type": "Float",
+          "unit": "units",
+          "default": 940.0
+        },
+        {
+          "name": "target_capacity",
+          "type": "Float",
+          "unit": "units",
+          "default": 1000.0
+        },
+        {
+          "name": "defect_count",
+          "type": "Float",
+          "unit": "units",
+          "default": 12.0
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "oee_percent",
+          "type": "Float",
+          "unit": "%"
+        },
+        {
+          "name": "availability",
+          "type": "Float",
+          "unit": "ratio"
+        },
+        {
+          "name": "performance",
+          "type": "Float",
+          "unit": "ratio"
+        },
+        {
+          "name": "quality",
+          "type": "Float",
+          "unit": "ratio"
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const runHours = Number(inputs.run_hours || 24);\n  const plannedHours = Number(inputs.planned_hours || 24);\n  const avail = Math.min(1.0, runHours / Math.max(plannedHours, 1));\n  const prod = Number(inputs.production_count || 940);\n  const cap = Number(inputs.target_capacity || 1000);\n  const perf = Math.min(1.0, prod / Math.max(cap, 1));\n  const defects = Number(inputs.defect_count || 12);\n  const good = Math.max(0, prod - defects);\n  const qual = prod > 0 ? (good / prod) : 1.0;\n  const oee = Number((avail * perf * qual * 100).toFixed(2));\n  return {\n    oee_percent: oee,\n    availability: Number(avail.toFixed(3)),\n    performance: Number(perf.toFixed(3)),\n    quality: Number(qual.toFixed(3))\n  };\n}",
+      "version": "v1.0"
+    },
+    {
+      "id": "fbt-7",
+      "template_code": "FB_KPI_EFFICIENCY",
+      "name": "Fractionation & Heat Exchanger Thermal Efficiency KPI",
+      "category": "KPI Analytics",
+      "description": "Calculates thermodynamic heat recovery efficiency (%) and Specific Energy Consumption (SEC in kWh/m\u00b3) for continuous refinery units.",
+      "inputs_schema": [
+        {
+          "name": "heat_recovered_mw",
+          "type": "Float",
+          "unit": "MW",
+          "default": 76.4
+        },
+        {
+          "name": "heat_input_mw",
+          "type": "Float",
+          "unit": "MW",
+          "default": 89.2
+        },
+        {
+          "name": "throughput_m3h",
+          "type": "Float",
+          "unit": "m\u00b3/h",
+          "default": 450.0
+        },
+        {
+          "name": "power_consumed_kwh",
+          "type": "Float",
+          "unit": "kWh",
+          "default": 320.0
+        }
+      ],
+      "outputs_schema": [
+        {
+          "name": "thermal_efficiency_pct",
+          "type": "Float",
+          "unit": "%"
+        },
+        {
+          "name": "sec_kwh_per_m3",
+          "type": "Float",
+          "unit": "kWh/m\u00b3"
+        },
+        {
+          "name": "efficiency_grade",
+          "type": "String",
+          "unit": ""
+        }
+      ],
+      "formula_code": "function execute(inputs) {\n  const q_rec = Number(inputs.heat_recovered_mw || 76.4);\n  const q_in = Number(inputs.heat_input_mw || 89.2);\n  const eff = q_in > 0 ? Number((q_rec / q_in * 100).toFixed(2)) : 0;\n  const q_flow = Number(inputs.throughput_m3h || 450.0);\n  const power = Number(inputs.power_consumed_kwh || 320.0);\n  const sec = q_flow > 0 ? Number((power / q_flow).toFixed(3)) : 0;\n  const grade = eff >= 85 ? 'TIER_1_EXCELLENT' : (eff >= 75 ? 'TIER_2_ACCEPTABLE' : 'TIER_3_DEGRADED');\n  return {\n    thermal_efficiency_pct: eff,\n    sec_kwh_per_m3: sec,\n    efficiency_grade: grade\n  };\n}",
+      "version": "v1.0"
+    }
+  ],
+  "event_forwardings": [
+    {
+      "id": "ef-92517f",
+      "name": "Node-RED Telemetry Ingestion Mirror",
+      "active": false,
+      "simplified_payload": true,
+      "connection_string": "",
+      "hub_name": "",
+      "host": "",
+      "username": "",
+      "password": "",
+      "exchange_topic": "",
+      "routing_key": "",
+      "endpoint": "http://localhost:1880/telemetry-in",
+      "selectedAssetIds": [
+        "ast-907f0596"
+      ],
+      "event_type": "Node-RED",
+      "scope": [
+        {
+          "asset_id": "ast-907f0596",
+          "asset_name": "OIL TANK",
+          "asset_path": "OIL TANK",
+          "equipment_id": "ast-907f0596",
+          "equipment_name": "OIL TANK",
+          "equipment_tag": "OIL TANK"
+        }
+      ]
+    }
+  ],
+  "activity_logs": [
+    {
+      "id": "log-185c101a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:24:40.232973Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f3d4319a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:23:40.223796Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-34da19b5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:22:40.224999Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7e3607be",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:21:40.223349Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-91c5fa84",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:20:40.221017Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-acc257e4",
+      "entity": "SCADA Window",
+      "entity_id": "win-61ca1b",
+      "action": "Create",
+      "event_initiated_by": "admin@local",
+      "status": "Success",
+      "created_at": "2026-10-14T03:20:16.543253Z",
+      "details": "Created SCADA Window 'TEST'"
+    },
+    {
+      "id": "log-96ce9499",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:19:40.223408Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-60483623",
+      "entity": "Event",
+      "entity_id": "ef-92517f",
+      "action": "Toggle Status",
+      "event_initiated_by": "admin@local",
+      "status": "Success",
+      "created_at": "2026-10-14T03:19:26.341409Z",
+      "details": "Toggled event forwarding Node-RED Telemetry Ingestion Mirror to STOP"
+    },
+    {
+      "id": "log-3356d326",
+      "entity": "Event",
+      "entity_id": "ef-92517f",
+      "action": "Toggle Status",
+      "event_initiated_by": "admin@local",
+      "status": "Success",
+      "created_at": "2026-10-14T03:19:24.234336Z",
+      "details": "Toggled event forwarding Node-RED Telemetry Ingestion Mirror to RUN"
+    },
+    {
+      "id": "log-8d9a6b3a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:18:40.225248Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d3f91762",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:17:40.225992Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e635c973",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:16:40.222053Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-a47eb74c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:15:40.220455Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e0943aff",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:14:40.229773Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-24e0bf7a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:13:40.224307Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-ff113585",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:12:40.222817Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f7d7638d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:11:40.291221Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-20726bb8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:10:40.220978Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-015e6dec",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:09:40.228966Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-112f5091",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:08:40.228682Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9ce8e427",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:07:40.217480Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-29c88345",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:06:40.219095Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8566be60",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:05:40.216427Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-867f640b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:04:40.215960Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b8d92217",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:03:40.214358Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e48ba5e5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:02:40.216236Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2f4dd13c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:01:40.219528Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7c1a0023",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T03:00:40.217635Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-31cdb6f1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:59:40.213390Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-329c4b4f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:58:40.216167Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3f7c7a49",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:57:40.211000Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1a69a68a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:56:40.218333Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7558907f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:55:40.213601Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9ed0dffc",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:54:40.209721Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-454eab51",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:53:40.210279Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-354d8f3f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:52:40.207616Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3f509ec6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:51:40.206781Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-826035b0",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:50:40.217339Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7dba1826",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:49:40.204846Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-42e227b7",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:48:40.211730Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-57561779",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:47:40.204937Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-74158001",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:46:40.210959Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-fcab534b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:45:40.207226Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-79b654a6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:44:40.217507Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f4fe53c6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:43:40.202701Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-cd10b4f2",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:42:40.203689Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d7d41054",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:41:40.206887Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-ab065dc8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:40:40.208653Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-13756d5e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:39:40.207923Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-38a0c0bb",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:38:40.203694Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1c282906",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:37:40.205234Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-beeebd32",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:36:40.204710Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5944e71b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:35:40.204484Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1d89bba8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:34:40.197116Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-276486b4",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:33:40.201666Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-17956d44",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:32:40.203173Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8175f043",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:31:40.200858Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9457ebec",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:30:40.184596Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9d011c88",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:29:40.189546Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e0f4f45f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:28:40.191597Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5a3c8233",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:27:40.190575Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-29ec6b62",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:26:40.185232Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-ef1715fa",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:25:40.185977Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-cb19d425",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:24:40.182049Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-29be7562",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:23:40.194744Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e6c420d0",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:22:40.168716Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e67e2c2f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:21:40.167995Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b6cb38c5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:20:40.176798Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5067502a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:19:40.171463Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9f06cb2f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:18:40.176253Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-76e16c0d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:17:40.176320Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5b85f665",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-14T02:16:40.170176Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8b46ed70",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:16:39.212449Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-09aca39b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:15:39.209186Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8c1990a8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:14:39.208503Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2d549d28",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:13:39.208828Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d3a5c3de",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:12:39.205913Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f413a4e7",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:11:39.198084Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-6bf90086",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:10:39.196821Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-996a45bc",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:09:39.195282Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-39b59cce",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:08:39.196845Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3e80dc10",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:07:39.196091Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-238d6746",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:06:39.197302Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c2144bed",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:05:39.201473Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5335d20e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:04:39.196011Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7cd79497",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:03:39.197177Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-65bdb590",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:02:39.195782Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-37600cdb",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:01:39.195820Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f0736ac5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T16:00:39.194019Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-bbe62a4b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:59:39.208512Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7c775749",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:58:39.194301Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f9093575",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:57:39.194316Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2b7dd183",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:56:39.199951Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-6d77c56a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:55:39.195121Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-4133d5d2",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:54:39.193532Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-19637f55",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:53:39.193932Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8937d42a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:52:39.196429Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8b7e7dad",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:51:39.195021Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-10831cf1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:50:39.188985Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8363d2dd",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:49:39.193095Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3e6f0e25",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:48:39.190146Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-cd8444c9",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:47:39.194650Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d20af6f6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:46:39.175845Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-294d2fbc",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:45:39.170252Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-510c40a1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:44:39.167607Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f26d4681",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:43:39.167775Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9b08d05a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:42:39.159890Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9489961b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:41:39.159427Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-bf4b4394",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:40:39.161423Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-80831d76",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:39:39.155066Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-739aed0e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:38:39.160985Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9e97e1e1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:37:39.156635Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1e4ece32",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:36:39.153271Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d202ac7d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:35:39.157116Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f6bc7c46",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:34:39.166518Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e0684093",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:33:39.154270Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9878486d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:32:39.155522Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c1cabad6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:31:39.152115Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-23fb5543",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:30:39.151491Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e643850b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:29:39.152940Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d2ac1c79",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:28:39.108232Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-579535c1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:27:39.109091Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9908b37a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:26:39.108692Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-22b60f4f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:25:39.107653Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e9674a72",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:24:39.108890Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-228d998b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:23:39.106713Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e4701e9e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:22:39.109753Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e0c4b863",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:21:39.110924Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3606717c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:20:39.107080Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-02fe8031",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:19:39.110989Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e002922d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:18:39.101482Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-205ed4fa",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:17:39.102590Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-561f7734",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:16:39.103020Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-69c2f5df",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:15:39.107685Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7e17b7d1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:14:39.100750Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7d49ccbb",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:13:39.100371Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-291c6113",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:12:39.098820Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c28d53c3",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:11:39.100483Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-0055fe08",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:10:39.100623Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-031ae036",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:09:39.098746Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-38e1dee5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:08:39.097175Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d547282e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:07:39.099235Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-be626e31",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:06:39.097256Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-929743b1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:05:39.096193Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9283d6fd",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:04:39.097440Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b55a0bbe",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:03:39.096518Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-43d3651d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:02:39.094413Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b87c2865",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:01:39.093766Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-592644b5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T15:00:39.094141Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-a9cd1719",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:59:39.095117Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-bcc47163",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:58:39.095064Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-756b7549",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:57:39.096059Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-6dcba4f5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:56:39.093651Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7e6e529f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:55:39.092759Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c6c21c9b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:54:39.091987Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-eabb141c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:53:39.092507Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f353728a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:52:39.097244Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-eed2c57d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:51:39.091375Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-4717df52",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:50:39.091200Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2ca9f3b9",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:49:39.090242Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-4fed0107",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:48:39.091785Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-18e1b8d8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:47:39.092699Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7f66e3c2",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:46:39.088528Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-529473d3",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:45:39.088795Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9dfe31ad",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:44:39.088727Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-45422383",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:43:39.089184Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c0eb55d3",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:42:39.088299Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-002b9689",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:41:39.089558Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-99da1db1",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:40:39.087785Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3d44b5e0",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:39:39.086411Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-fb86ef6b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:38:39.084981Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-57cef679",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:37:39.086414Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3cbfe6b5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:36:39.086046Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c64e6800",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:35:39.084961Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-75bd5862",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:34:39.083202Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-45c8433e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:33:39.085079Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2f3edc7f",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:32:39.085188Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-8e073b2e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:31:39.083010Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b5930289",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:30:39.084410Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-033b408c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:29:39.084964Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-bf738d29",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:28:39.083668Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-edd39d44",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:27:39.082351Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-17a61bd6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:26:39.081789Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1ca059f3",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:25:39.080196Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-426c961a",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:24:39.083818Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9f96b375",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:23:39.079635Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b23181af",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:22:39.077557Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-1b7a1cb8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:21:39.077186Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-229a6b66",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:20:39.079929Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7e9b3c36",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:19:39.077041Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-0fb46e21",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:18:39.079007Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2621ad49",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:17:39.076448Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-c030c12c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:16:39.076337Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-012458b8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:15:39.075884Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f1bf0bbf",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:14:39.076295Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-183728a7",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:13:39.078710Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-5c105af7",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:12:39.075707Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-506e056d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:11:39.075773Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-62e69705",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:10:39.081072Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3eee2da8",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:09:39.075041Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-a0000f15",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:08:39.081960Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-06dcfacf",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:07:39.080516Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3de1e423",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:06:39.073699Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-9a78f28b",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:05:39.074337Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-d45d1500",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:04:39.073180Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2bdb4d36",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:03:39.076233Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2d8722eb",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:02:39.060864Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-b00a04d6",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:01:39.059899Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-cc053b7c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T14:00:39.059098Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-43dfffee",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:59:39.041913Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-2017995c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:58:39.042438Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-3684595c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:57:39.039431Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-578877b9",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:56:39.039663Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-80065c6e",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:55:39.040190Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-7887f457",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:54:39.037430Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-363c652d",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:53:39.036838Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-76435d61",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:52:39.032272Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-64d33ea4",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:51:39.028969Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-28cb0a94",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:50:39.029997Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-e8a44de5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:49:39.028516Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-0284ff10",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:48:39.029672Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-745719af",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:47:39.031534Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-f272151c",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:46:39.028231Z",
+      "details": "Ingested payload from device TEST_1"
+    },
+    {
+      "id": "log-0de6cee5",
+      "entity": "Broker REST API",
+      "entity_id": "Ingestion",
+      "action": "Payload Received",
+      "event_initiated_by": "REST Client",
+      "status": "Success",
+      "created_at": "2026-10-13T13:45:39.028126Z",
+      "details": "Ingested payload from device TEST_1"
+    }
+  ],
+  "users": [],
+  "user_groups": [],
+  "user_overrides": [],
+  "api_clients": [],
+  "object_security_rules": [],
+  "scada_windows": [
+    {
+      "id": "win-61ca1b",
+      "title": "TEST",
+      "description": "",
+      "asset_id": "ast-907f0596",
+      "asset_name": "OIL TANK",
+      "width": 1060,
+      "height": 580,
+      "background_color": "#020617",
+      "grid_size": 20,
+      "is_default": false,
+      "elements": [
+        {
+          "type": "CentrifugalPump",
+          "label": "P-165",
+          "x": 300,
+          "y": 140,
+          "width": 54,
+          "height": 54,
+          "mapped_tag": "PUMP_101A.DIFF_HEAD",
+          "source_type": "CENTUM_VP",
+          "bound_property": "running",
+          "units": "\u00b0C",
+          "id": "elem-232435"
+        },
+        {
+          "type": "PositiveDispPump",
+          "label": "P-174",
+          "x": 300,
+          "y": 320,
+          "width": 56,
+          "height": 44,
+          "mapped_tag": "FIC_101.PV",
+          "source_type": "CENTUM_VP",
+          "bound_property": "running",
+          "units": "\u00b0C",
+          "id": "elem-4ec516"
+        }
+      ]
+    }
+  ],
+  "available_projects": [],
+  "uom_list": [],
+  "dashboard_widgets": [],
+  "current_project": {
+    "id": "",
+    "name": "",
+    "code": "",
+    "region": "",
+    "description": ""
+  },
+  "user_profile": {
+    "first_name": "Admin",
+    "last_name": "",
+    "account_id": "admin@local",
+    "role": "Administrator",
+    "avatar": "",
+    "datetime_format": "YYYY-MM-DD HH:mm:ss",
+    "timezone": "UTC"
+  }
+}

@@ -1,0 +1,767 @@
+<USER_REQUEST>
+# MASTER IMPLEMENTATION PROMPT — AHI-INSPIRED FUNCTION BLOCK V2
+
+## ROLE
+
+Act as a Principal Industrial Software Architect, AHI Data Management Specialist, IIoT Engineer, Senior React/TypeScript Developer, Senior Python FastAPI Developer, and Industrial Calculation Engine Architect.
+
+## OBJECTIVE
+
+Redesign the existing Function Block V2 module in my React.js and Python FastAPI application.
+
+The current Function Block design is incorrect for my requirement because users can configure blocks directly without first defining a proper reusable Block Template and its Asset Attributes.
+
+I need a TEMPLATE-FIRST architecture.
+
+The correct execution and configuration order is:
+
+1. Create Block Template.
+2. Define custom Asset Markup.
+3. Define Input Asset Attributes.
+4. Define Output Runtime Attributes.
+5. Write custom JavaScript.
+6. Map JavaScript result fields to Output Runtime Attributes.
+7. Validate and publish the Block Template.
+8. Create a Block Execution instance from the template.
+9. Map actual assets and attributes.
+10. Configure trigger and execution settings.
+11. Run the Function Block.
+12. Store outputs in the mapped Runtime Attributes.
+
+This sequence is mandatory.
+
+Do not redesign the entire application.
+
+Preserve all working DM, DI, DA, telemetry, asset, device, dashboard and alarm features.
+
+---
+
+# PART 1 — REQUIRED DOCUMENT REVIEW
+
+Review the uploaded AHI Data Management User Manual v1.3.
+
+Study:
+
+Section 9.1 — Asset Entity
+
+Section 9.1.3 — Asset Attribute
+
+Section 9.2 — Asset Template Entity
+
+Section 9.2.1 — Asset Template Attribute
+
+Relevant concepts:
+
+- Asset Hierarchy
+- Asset Template
+- Device Markup
+- Markup Channel
+- Static Attribute
+- Dynamic Attribute
+- Runtime Attribute
+- Alias Attribute
+- Integration Attribute
+- Command Attribute
+- Trigger Attribute
+- Expression
+- Use Expression
+- Block Execution result
+- Data Type
+- Unit of Measure
+- Attribute Quality
+- Attribute Timestamp
+
+Preserve the documented AHI concepts when adapting them to the existing application.
+
+Note that the manual does not completely define the Function Block V2 custom JavaScript workflow. The additional architecture below is the requested design for this application.
+
+---
+
+# PART 2 — AUDIT EXISTING SOURCE CODE
+
+First inspect:
+
+- Existing Asset Hierarchy.
+- Existing Asset Attributes.
+- Existing Asset Templates.
+- Existing Function Block pages.
+- Existing block registration.
+- Existing execution engine.
+- Existing attribute write services.
+- Existing PostgreSQL models.
+- Existing historian.
+- Existing user permissions.
+- Existing WebSocket telemetry events.
+
+Identify what is already implemented.
+
+Extend the current Function Block implementation rather than creating duplicate services.
+
+Generate an implementation audit with exact files and required changes.
+
+---
+
+# PART 3 — BLOCK TEMPLATE MANAGER
+
+Create a native DM page:
+
+Data Management → Function Blocks → Block Templates
+
+Required operations:
+
+- Create Template.
+- Edit Template.
+- Clone Template.
+- Delete Draft.
+- Validate.
+- Test.
+- Publish.
+- Create New Version.
+- View Version History.
+- Create Block Execution.
+- Export/Import Template.
+
+A Block Template must be an independent reusable definition.
+
+It must not contain permanent bindings to one specific physical asset.
+
+## General Properties
+
+- Template ID
+- Template Name
+- Unique Template Code
+- Description
+- Category
+- Asset Type
+- Execution Language
+- Template Version
+- Owner
+- Created/Modified timestamps
+- Draft/Published status
+
+---
+
+# PART 4 — CUSTOM ASSET MARKUP DESIGNER
+
+Create a dedicated "Asset Markup" configuration tab.
+
+The user must define logical asset placeholders.
+
+Example:
+
+@Pump — Pump asset
+
+@Motor — Associated motor asset
+
+@Process — Parent process system
+
+For each placeholder configure:
+
+- Markup Name
+- Markup ID
+- Expected Asset Type
+- Description
+- Required/Optional
+- Selection Scope
+- Relationship to another placeholder
+- Expected Attribute Schema
+
+Also support AHI-style Device Markup and Integration Channel Markup where the existing system needs them.
+
+Example:
+
+@Pump → asset placeholder
+
+@PumpDevice → device placeholder
+
+@PumpDevice.Vibration → device metric
+
+@Pump.FlowRate → asset attribute
+
+When deploying the template, prompt the user to select actual assets and devices.
+
+The same template must support repeated deployments to different asset instances.
+
+Never store a real asset ID inside the reusable template unless it is explicitly declared as a fixed reference.
+
+---
+
+# PART 5 — INPUT ATTRIBUTE DESIGNER
+
+The template user must define the input interface BEFORE writing JavaScript.
+
+Add:
+
++ Add Input Attribute
+
+Fields:
+
+- Input Variable Name
+- Display Name
+- Description
+- Asset Markup Reference
+- Attribute Reference
+- Attribute Type
+- Data Type
+- Unit of Measure
+- Required
+- Default Value
+- Quality Policy
+- Maximum Data Age
+- Missing Data Policy
+- Historical Window Configuration
+
+Supported inputs:
+
+- Static
+- Dynamic
+- Runtime
+- Alias
+- Integration
+- Constant
+- Historical Time Series
+
+Example template:
+
+flow → @Pump.FlowRate
+
+power → @Motor.Power
+
+running → @Pump.RunningStatus
+
+Allow multiple inputs and dynamic input count.
+
+Inputs must be referenced in the JavaScript environment by their configured variable names.
+
+---
+
+# PART 6 — OUTPUT RUNTIME ATTRIBUTE DESIGNER
+
+This is the most important feature.
+
+Add:
+
++ Add Output Runtime Attribute
+
+The user must define output attributes inside the Block Template.
+
+The output definition must include:
+
+- Output Name
+- Output Key
+- Description
+- Target Asset Markup
+- Runtime Attribute Name
+- Data Type
+- Unit of Measure
+- Decimal Places
+- Nullable Setting
+- Default Value
+- Script Result Key
+- Persist to Historian
+- Publish Attribute Update Event
+- Quality Propagation Policy
+
+Example:
+
+Output 1:
+
+Key: specificEnergy
+
+Target Asset: @Pump
+
+Runtime Attribute: SpecificEnergy
+
+Data Type: Double
+
+Unit: kWh/m³
+
+Script Result Key: specificEnergy
+
+Output 2:
+
+Key: isRunning
+
+Target Asset: @Pump
+
+Runtime Attribute: IsRunning
+
+Data Type: Boolean
+
+Script Result Key: isRunning
+
+Output 3:
+
+Key: validCalculation
+
+Target Asset: @Pump
+
+Runtime Attribute: KPIValid
+
+Data Type: Boolean
+
+Script Result Key: validCalculation
+
+The user must be able to create Runtime Attribute definitions from the template.
+
+When an execution instance is deployed, the system must resolve or create the corresponding Runtime Attributes using a validated migration/deployment operation.
+
+Do not blindly create duplicate attributes if matching definitions already exist.
+
+Support explicit mapping to existing compatible Runtime Attributes.
+
+A Block Execution-managed Runtime Attribute must have its expression disabled and its source registered as the relevant Function Block output.
+
+Do not allow both an independent expression evaluator and a Function Block to overwrite the same attribute without a defined ownership policy.
+
+Every output must have a clear script-to-attribute mapping.
+
+---
+
+# PART 7 — CUSTOM JAVASCRIPT EDITOR
+
+Only after Input and Output interfaces are defined should the user write JavaScript.
+
+Implement Monaco Editor in React.
+
+Display the available input variables, output variables and parameters.
+
+Example:
+
+function calculate(ctx, inputs) {
+  const flow = inputs.flow;
+  const power = inputs.power;
+  const running = inputs.running;
+
+  const valid =
+    Number.isFinite(flow) &&
+    flow > 0 &&
+    Number.isFinite(power) &&
+    power >= 0;
+
+  return {
+    specificEnergy: valid ? power / flow : null,
+    isRunning: running === true || running === 1,
+    validCalculation: valid
+  };
+}
+
+Provide:
+
+- Syntax highlighting.
+- Autocomplete.
+- Input variable hints.
+- Output suggestions.
+- Syntax validation.
+- Code formatting.
+- Test input JSON.
+- Output JSON inspection.
+- Console logs.
+- Execution errors.
+- Execution duration.
+- Script version history.
+
+The return object keys must be validated against declared output keys.
+
+The actual runtime must not infer new production Runtime Attributes simply because JavaScript returned an unexpected property.
+
+Use an isolated server-side JavaScript execution service.
+
+Never execute untrusted JavaScript with unrestricted filesystem, network, database or operating-system access.
+
+Use process/container isolation, resource limits, timeouts and permission checks. Node.js vm alone is not a sufficient security boundary for untrusted scripts.
+
+---
+
+# PART 8 — SCRIPT OUTPUT MAPPING
+
+Create a visual "Output Mapping" tab.
+
+The UI must show:
+
+JavaScript Result Key → Template Runtime Output → Target Asset Markup
+
+Example:
+
+result.specificEnergy
+  → Runtime Output: SpecificEnergy
+  → Asset Markup: @Pump
+
+result.isRunning
+  → Runtime Output: IsRunning
+  → Asset Markup: @Pump
+
+result.validCalculation
+  → Runtime Output: KPIValid
+  → Asset Markup: @Pump
+
+For each mapping:
+
+- Validate that the script key exists.
+- Validate the declared output type.
+- Validate unit compatibility.
+- Validate the target attribute definition.
+- Validate write permission.
+- Validate Runtime Attribute ownership.
+- Detect duplicate output targets.
+- Prevent circular attribute dependencies.
+
+Display mapping errors before publication.
+
+Mapping must be persisted as structured configuration, not inferred from JavaScript source lines or fragile string matching.
+
+---
+
+# PART 9 — BLOCK TEMPLATE VALIDATION AND PUBLICATION
+
+Validation must check:
+
+- Template metadata.
+- Unique markup names.
+- Required asset placeholders.
+- Input interface.
+- Output interface.
+- Correct attribute types.
+- Valid script syntax.
+- Valid script result keys.
+- Unit compatibility.
+- Output mapping completeness.
+- Duplicate output mappings.
+- Unsupported dependencies.
+- Unauthorized operations.
+
+The template must support:
+
+DRAFT → VALIDATED → PUBLISHED → RETIRED
+
+Published template versions must be immutable.
+
+Changes should create a new draft version.
+
+Existing deployed instances must remain pinned to their original template versions until explicitly upgraded.
+
+---
+
+# PART 10 — BLOCK EXECUTION INSTANCE CREATION
+
+Create another DM page:
+
+Data Management → Function Blocks → Block Executions
+
+The user selects a published Block Template and clicks:
+
++ Create Block Execution
+
+Required steps:
+
+1. Select published template version.
+2. Select actual target assets.
+3. Resolve Asset Markup placeholders.
+4. Map input attribute definitions.
+5. Resolve output Runtime Attributes.
+6. Preview new Runtime Attributes to create.
+7. Validate permissions and compatibility.
+8. Apply output attribute provisioning.
+9. Configure execution triggers.
+10. Save instance.
+11. Validate and activate.
+
+Example:
+
+Template: Pump Performance KPI v1.0
+
+@Pump → Pump P101
+
+@Motor → Motor M101
+
+flow → P101.FlowRate
+
+power → M101.Power
+
+running → P101.RunningStatus
+
+specificEnergy → P101.SpecificEnergy
+
+isRunning → P101.IsRunning
+
+validCalculation → P101.KPIValid
+
+The same template must be independently deployable to P102 and P103.
+
+Each instance maintains separate bindings, state and execution history.
+
+---
+
+# PART 11 — FUNCTION BLOCK EXECUTION ENGINE
+
+The backend must:
+
+1. Receive configured trigger.
+2. Load active Block Execution instance.
+3. Resolve its immutable template version.
+4. Resolve all input attributes.
+5. Validate input quality and freshness.
+6. Build the script input payload.
+7. Execute JavaScript in an isolated worker.
+8. Validate returned results.
+9. Map returned fields to output Runtime Attributes.
+10. Write the results through the existing attribute service.
+11. Store execution timestamp and output quality.
+12. Persist historian values where enabled.
+13. Publish configured attribute update events.
+14. Record execution trace and status.
+
+Triggers:
+
+- Manual.
+- Input Attribute Updated.
+- Selected Trigger Attribute Updated.
+- Scheduled Interval.
+- Cron.
+- Rule Chain Invocation.
+- Historical Simulation.
+
+Implement debounce, idempotency, missing-data handling, safe retries, event loop prevention and execution concurrency limits.
+
+A failed script must not overwrite good KPI values with fabricated values.
+
+---
+
+# PART 12 — DATABASE DESIGN
+
+Reuse the application's existing asset tables.
+
+Suggested new entities:
+
+block_templates
+block_template_versions
+block_template_asset_markups
+block_template_input_definitions
+block_template_output_definitions
+block_template_scripts
+block_template_output_mappings
+block_execution_instances
+block_execution_asset_bindings
+block_execution_input_bindings
+block_execution_output_bindings
+block_execution_trigger_configs
+block_execution_history
+
+Use PostgreSQL with appropriate relationships, JSONB configurations, indexes, tenant/project scoping and migration scripts.
+
+Ensure each execution instance references an immutable published template version.
+
+Preserve referential integrity and audit trails.
+
+Do not create duplicate Asset Attribute systems.
+
+---
+
+# PART 13 — FASTAPI ROUTES
+
+Implement routes consistent with existing API conventions.
+
+Block Template:
+
+POST /api/v2/fb/templates
+GET /api/v2/fb/templates
+GET /api/v2/fb/templates/{id}
+PUT /api/v2/fb/templates/{id}
+
+POST /api/v2/fb/templates/{id}/validate
+POST /api/v2/fb/templates/{id}/test
+POST /api/v2/fb/templates/{id}/publish
+
+Asset Markup and Interface:
+
+PUT /api/v2/fb/templates/{id}/markups
+PUT /api/v2/fb/templates/{id}/inputs
+PUT /api/v2/fb/templates/{id}/outputs
+PUT /api/v2/fb/templates/{id}/code
+PUT /api/v2/fb/templates/{id}/output-mappings
+
+Block Executions:
+
+POST /api/v2/fb/executions
+GET /api/v2/fb/executions
+GET /api/v2/fb/executions/{id}
+POST /api/v2/fb/executions/{id}/validate
+POST /api/v2/fb/executions/{id}/activate
+POST /api/v2/fb/executions/{id}/pause
+POST /api/v2/fb/executions/{id}/run
+GET /api/v2/fb/executions/{id}/history
+
+Support WebSocket debug streaming if the existing architecture uses WebSockets.
+
+---
+
+# PART 14 — ACCEPTANCE TESTS
+
+TEST A — Block Template Creation
+
+Create a new template with asset markup, inputs and Runtime outputs.
+
+Expected:
+Template saved and reopens correctly.
+
+TEST B — Output Runtime Definition
+
+Add an output called SpecificEnergy.
+
+Expected:
+Output appears in the template and can be mapped to a compatible Runtime Attribute.
+
+TEST C — JavaScript Mapping
+
+Return specificEnergy from JavaScript.
+
+Expected:
+The output mapping resolves correctly.
+
+TEST D — Deployment to Pump P101
+
+Map template placeholders to actual assets.
+
+Expected:
+Input bindings and Runtime outputs resolve to P101 and its related motor.
+
+TEST E — Runtime Output Provisioning
+
+Deploy the instance.
+
+Expected:
+Only missing, approved Runtime Attributes are created.
+
+TEST F — KPI Calculation
+
+Inputs:
+
+Flow = 20 m³/h
+Power = 15 kW
+Running = 1
+
+Expected:
+
+SpecificEnergy = 0.75 kWh/m³
+IsRunning = true
+KPIValid = true
+
+TEST G — Automatic Execution
+
+Update FlowRate.
+
+Expected:
+The active Block Execution recalculates and updates the bound Runtime Attributes according to its configured trigger and freshness policy.
+
+TEST H — Template Reuse
+
+Deploy the same template to P102.
+
+Expected:
+P101 and P102 run independently with their own attribute mappings.
+
+TEST I — Version Isolation
+
+Publish template v2.
+
+Expected:
+Existing v1 executions remain unchanged until explicitly migrated.
+
+TEST J — Invalid Script Output
+
+Return an undeclared or incompatible result.
+
+Expected:
+Validation failure and no invalid attribute writes.
+
+TEST K — Security
+
+Attempt unauthorized Runtime Attribute writes or unsafe JavaScript.
+
+Expected:
+Rejected with clear errors and audit logs.
+
+---
+
+# PART 15 — IMPLEMENTATION IN ANTIGRAVITY
+
+Implement in this exact order:
+
+PHASE 1:
+Audit existing FB V2 implementation and Asset Attribute schema.
+
+PHASE 2:
+Build Block Template Manager.
+
+PHASE 3:
+Build Asset Markup, Input Attribute and Output Runtime Attribute designers.
+
+PHASE 4:
+Integrate custom JavaScript editor and isolated runtime.
+
+PHASE 5:
+Implement explicit script output mapping.
+
+PHASE 6:
+Implement template validation and publication.
+
+PHASE 7:
+Build Block Execution creation and actual asset binding.
+
+PHASE 8:
+Implement attribute-triggered execution and output persistence.
+
+PHASE 9:
+Implement debugging, versioning, test coverage and reliability safeguards.
+
+Do not skip directly to writing a JavaScript executor before the Block Template data model and output mappings exist.
+
+Do not duplicate existing Asset Attribute tables or services.
+
+Do not create decorative frontend-only functionality.
+
+At each phase:
+
+- List changed files.
+- Show completed API contracts.
+- Implement database migrations.
+- Run automated tests.
+- Report failures.
+- Fix regressions.
+- Preserve existing application behavior.
+
+## FINAL DELIVERABLE
+
+The user must be able to:
+
+Create Block Template
+→ Define Asset Markup
+→ Define Inputs
+→ Define Output Runtime Attributes
+→ Write Custom JavaScript
+→ Map Script Results
+→ Test
+→ Publish
+→ Deploy to Actual Assets
+→ Activate
+→ Run Automatically
+→ Monitor Result Attributes in DM and DI.
+
+The system must be reusable, data-driven, versioned, secure and fully integrated with the existing React/FastAPI application.
+
+START BY ANALYZING THE CURRENT SOURCE AND CORRECTING THE FB V2 DATA MODEL TO SUPPORT THIS TEMPLATE-FIRST DESIGN.
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-10-11T20:34:12+13:00.
+
+The user's current state is as follows:
+Active Document: c:\Users\Administrator\VM\AHI DBM\frontend\src\api\client.js (LANGUAGE_JAVASCRIPT)
+Cursor is on line: 1
+Other open documents:
+- c:\Users\Administrator\VM\AHI DBM\backend\app\services\scada_symbol_catalog.py (LANGUAGE_PYTHON)
+- c:\Users\Administrator\VM\AHI DBM\backend\app\services\scada_template_catalog.py (LANGUAGE_PYTHON)
+- c:\Users\Administrator\VM\AHI DBM\frontend\src\views\dm\RuleChainStudioV2.jsx (LANGUAGE_JAVASCRIPT)
+- c:\Users\Administrator\VM\AHI DBM\backend\app\api\routes_scada.py (LANGUAGE_PYTHON)
+- c:\Users\Administrator\VM\AHI DBM\backend\app\services\js_sandbox_worker.js (LANGUAGE_JAVASCRIPT)
+</ADDITIONAL_METADATA>

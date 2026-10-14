@@ -1,0 +1,390 @@
+[
+  {
+    "id": "tab_ahi_ingest",
+    "type": "tab",
+    "label": "Yokogawa AHI Telemetry & CSV Ingestion",
+    "disabled": false,
+    "info": "End-to-end industrial ingestion pipeline for Yokogawa OpreX AHI & DBM.\nReads CSV plant telemetry or simulates live CENTUM VP process variations, and ingests into AHI DBM via REST API on port 91/90."
+  },
+  {
+    "id": "comment_csv_stream",
+    "type": "comment",
+    "z": "tab_ahi_ingest",
+    "name": "=== 1. CSV Telemetry Replay Engine (Plant Simulation) ===",
+    "info": "Continuously iterates over cdu_plant_telemetry.csv rows every 2 seconds, updates timestamp to now, and POSTs to /api/v1/tags/ingest.",
+    "x": 260,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "inject_csv_timer",
+    "type": "inject",
+    "z": "tab_ahi_ingest",
+    "name": "Replay Clock (Every 2s)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "2",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.5,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 160,
+    "y": 120,
+    "wires": [
+      [
+        "fn_read_csv_cursor"
+      ]
+    ]
+  },
+  {
+    "id": "fn_read_csv_cursor",
+    "type": "function",
+    "z": "tab_ahi_ingest",
+    "name": "Load Next CSV Row",
+    "func": "// Global in-memory pointer for sequential replay\nconst fs = global.get('fs') || context.global.fs;\nlet cursor = context.get('csv_cursor') || 0;\nlet cachedRows = context.get('cached_rows') || null;\n\nconst csvFilePath = 'c:/Users/Administrator/VM/AHI DBM/validation/cdu_plant_telemetry.csv';\n\nif (!cachedRows) {\n    try {\n        const fsModule = (typeof require !== 'undefined') ? require('fs') : null;\n        if (fsModule && fsModule.existsSync(csvFilePath)) {\n            const raw = fsModule.readFileSync(csvFilePath, 'utf8');\n            const lines = raw.split(/\\r?\\n/).filter(l => l.trim().length > 0);\n            const headers = lines[0].split(',').map(h => h.trim());\n            cachedRows = [];\n            for (let i = 1; i < lines.length; i++) {\n                const parts = lines[i].split(',').map(p => p.trim());\n                if (parts.length === headers.length) {\n                    const rowObj = {};\n                    headers.forEach((h, idx) => rowObj[h] = parts[idx]);\n                    cachedRows.push(rowObj);\n                }\n            }\n            context.set('cached_rows', cachedRows);\n        }\n    } catch (e) {\n        node.warn(\"Could not read file directly, using virtual synthetic row: \" + e.message);\n    }\n}\n\nlet rowData = null;\nif (cachedRows && cachedRows.length > 0) {\n    rowData = cachedRows[cursor % cachedRows.length];\n    cursor = (cursor + 1) % cachedRows.length;\n    context.set('csv_cursor', cursor);\n} else {\n    // High-fidelity fallback plant dynamic model if file access restricted in sandbox\n    const t = (cursor++) * 0.1;\n    rowData = {\n        'FIC_101.PV': (450 + 10 * Math.sin(t) + (Math.random() * 2 - 1)).toFixed(1),\n        'FIC_102.PV': (175 + 5 * Math.cos(t * 1.2) + (Math.random() * 1.5 - 0.75)).toFixed(1),\n        'LIC_101.PV': (60 + 3 * Math.sin(t * 0.8)).toFixed(1),\n        'TIC_101.PV': (118 + 2 * Math.sin(t * 0.5)).toFixed(1),\n        'TIC_102.PV': (235 + 3 * Math.cos(t * 0.6)).toFixed(1),\n        'PIC_101.PV': (145 + 1.5 * Math.sin(t * 1.5)).toFixed(1),\n        'VIB_101.RMS': (1.8 + 0.15 * Math.sin(t * 2.0)).toFixed(3),\n        'PUMP_101A.DIFF_HEAD': '55.4',\n        'CDU_101.DELTA_T': '117.0',\n        'CDU_101.MT_DISTANCE': '1.35',\n        'PUMP_101A.ST': '1'\n    };\n    context.set('csv_cursor', cursor);\n}\n\n// Convert row into AHI Tag map with current UTC timestamp\nconst tagsPayload = {};\nconst nowIso = new Date().toISOString();\n\nfor (const [key, val] of Object.entries(rowData)) {\n    if (key !== 'timestamp') {\n        const numVal = Number(val);\n        tagsPayload[key] = isNaN(numVal) ? val : numVal;\n    }\n}\n\nmsg.payload = {\n    timestamp: nowIso,\n    tags: tagsPayload\n};\n\nmsg.headers = {\n    'Content-Type': 'application/json'\n};\n\nnode.status({ fill: 'green', shape: 'dot', text: `Row ${cursor} | FIC: ${tagsPayload['FIC_101.PV']} m3/h` });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 420,
+    "y": 120,
+    "wires": [
+      [
+        "http_post_tags_ingest"
+      ]
+    ]
+  },
+  {
+    "id": "http_post_tags_ingest",
+    "type": "http request",
+    "z": "tab_ahi_ingest",
+    "name": "POST /api/v1/tags/ingest",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "http://localhost:91/api/v1/tags/ingest",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 680,
+    "y": 120,
+    "wires": [
+      [
+        "debug_tags_ingest",
+        "status_tags_ingest"
+      ]
+    ]
+  },
+  {
+    "id": "debug_tags_ingest",
+    "type": "debug",
+    "z": "tab_ahi_ingest",
+    "name": "Live Ingest Response",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 920,
+    "y": 100,
+    "wires": []
+  },
+  {
+    "id": "status_tags_ingest",
+    "type": "status",
+    "z": "tab_ahi_ingest",
+    "name": "Ingest Link Health",
+    "scope": [
+      "http_post_tags_ingest"
+    ],
+    "x": 920,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "comment_broker_ingest",
+    "type": "comment",
+    "z": "tab_ahi_ingest",
+    "name": "=== 2. Industrial IoT Broker Ingest (pump-p101a-hub-01) ===",
+    "info": "Simulates MQTT / IoT Broker device stream. Updates dynamic asset attributes in real time.",
+    "x": 260,
+    "y": 200,
+    "wires": []
+  },
+  {
+    "id": "inject_broker_timer",
+    "type": "inject",
+    "z": "tab_ahi_ingest",
+    "name": "Broker Heartbeat (Every 3s)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "3",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 1.0,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 260,
+    "wires": [
+      [
+        "fn_broker_payload"
+      ]
+    ]
+  },
+  {
+    "id": "fn_broker_payload",
+    "type": "function",
+    "z": "tab_ahi_ingest",
+    "name": "Build MQTT Device Payload",
+    "func": "const step = context.get('step') || 0;\ncontext.set('step', step + 1);\n\n// Realistic industrial pump hub telemetry\nconst dischargePress = Number((580.0 + 15.0 * Math.sin(step * 0.15) + (Math.random() * 4 - 2)).toFixed(1));\nconst vibAxial = Number((1.75 + 0.25 * Math.cos(step * 0.2) + (Math.random() * 0.1)).toFixed(2));\nconst flowRate = Number((450.0 + 12.0 * Math.sin(step * 0.1)).toFixed(1));\nconst motorTemp = Number((68.0 + 2.5 * Math.sin(step * 0.05)).toFixed(1));\n\nmsg.payload = {\n    deviceid: \"pump-p101a-hub-01\",\n    discharge_pressure: dischargePress,\n    vibration_axial: vibAxial,\n    flow_rate: flowRate,\n    temperature: motorTemp,\n    running: true\n};\n\nmsg.headers = {\n    'Content-Type': 'application/json'\n};\n\nnode.status({ fill: 'blue', shape: 'dot', text: `P: ${dischargePress} kPa | Vib: ${vibAxial} mm/s` });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 430,
+    "y": 260,
+    "wires": [
+      [
+        "http_post_broker_ingest"
+      ]
+    ]
+  },
+  {
+    "id": "http_post_broker_ingest",
+    "type": "http request",
+    "z": "tab_ahi_ingest",
+    "name": "POST /api/v1/dm/broker/ingest",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "http://localhost:91/api/v1/dm/broker/ingest",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 700,
+    "y": 260,
+    "wires": [
+      [
+        "debug_broker_ingest"
+      ]
+    ]
+  },
+  {
+    "id": "debug_broker_ingest",
+    "type": "debug",
+    "z": "tab_ahi_ingest",
+    "name": "Broker Ingest Status",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 930,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "comment_bulk_csv",
+    "type": "comment",
+    "z": "tab_ahi_ingest",
+    "name": "=== 3. Bulk CSV File Uploader (/api/v1/tags/ingest-csv) ===",
+    "info": "Uploads entire CSV files in one shot to populate timeseries history and live cache.",
+    "x": 270,
+    "y": 340,
+    "wires": []
+  },
+  {
+    "id": "inject_bulk_csv",
+    "type": "inject",
+    "z": "tab_ahi_ingest",
+    "name": "Upload Entire CSV (Manual Trigger)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 400,
+    "wires": [
+      [
+        "fn_prepare_bulk_csv"
+      ]
+    ]
+  },
+  {
+    "id": "fn_prepare_bulk_csv",
+    "type": "function",
+    "z": "tab_ahi_ingest",
+    "name": "Read & Package CSV File",
+    "func": "const csvPath = 'c:/Users/Administrator/VM/AHI DBM/validation/cdu_plant_telemetry.csv';\n\ntry {\n    const fs = (typeof require !== 'undefined') ? require('fs') : null;\n    if (fs && fs.existsSync(csvPath)) {\n        msg.payload = fs.readFileSync(csvPath, 'utf8');\n        msg.headers = { 'Content-Type': 'text/csv' };\n        node.status({ fill: 'green', shape: 'dot', text: `Read ${msg.payload.length} bytes` });\n        return msg;\n    }\n} catch (e) {\n    node.error(\"Failed to read CSV: \" + e.message);\n}\n\n// Fallback sample mini-CSV\nmsg.payload = `timestamp,FIC_101.PV,TIC_101.PV,LIC_101.PV\n${new Date().toISOString()},452.3,118.4,62.1\n${new Date(Date.now() - 1000).toISOString()},453.1,118.5,61.9`;\nmsg.headers = { 'Content-Type': 'text/csv' };\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 400,
+    "wires": [
+      [
+        "http_post_bulk_csv"
+      ]
+    ]
+  },
+  {
+    "id": "http_post_bulk_csv",
+    "type": "http request",
+    "z": "tab_ahi_ingest",
+    "name": "POST /api/v1/tags/ingest-csv",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "http://localhost:91/api/v1/tags/ingest-csv",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 700,
+    "y": 400,
+    "wires": [
+      [
+        "debug_bulk_csv"
+      ]
+    ]
+  },
+  {
+    "id": "debug_bulk_csv",
+    "type": "debug",
+    "z": "tab_ahi_ingest",
+    "name": "Bulk Ingest Summary",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 930,
+    "y": 400,
+    "wires": []
+  },
+  {
+    "id": "comment_socketio_stream",
+    "type": "comment",
+    "z": "tab_ahi_ingest",
+    "name": "=== 4. Socket.IO Telemetry & CSV Ingestion Engine (Port 91) ===",
+    "info": "Real-time bi-directional streaming via Socket.IO engine. Emits 'telemetry', 'csv_row' and 'csv_bulk' events directly to http://localhost:91/socket.io/.",
+    "x": 280,
+    "y": 480,
+    "wires": []
+  },
+  {
+    "id": "inject_sio_timer",
+    "type": "inject",
+    "z": "tab_ahi_ingest",
+    "name": "Socket.IO Pulse (Every 1s)",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 1.5,
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 170,
+    "y": 540,
+    "wires": [
+      [
+        "fn_build_sio_packet"
+      ]
+    ]
+  },
+  {
+    "id": "fn_build_sio_packet",
+    "type": "function",
+    "z": "tab_ahi_ingest",
+    "name": "Format Socket.IO CSV Event",
+    "func": "const step = context.get('sio_step') || 0;\ncontext.set('sio_step', step + 1);\n\n// Generate high frequency dynamic telemetry packet\nconst fic101 = Number((450.0 + 8.0 * Math.sin(step * 0.1)).toFixed(1));\nconst tic101 = Number((118.0 + 1.8 * Math.cos(step * 0.08)).toFixed(1));\nconst pic101 = Number((145.0 + 2.2 * Math.sin(step * 0.12)).toFixed(1));\nconst vib101 = Number((1.75 + 0.15 * Math.sin(step * 0.25)).toFixed(3));\n\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    event: \"telemetry\",\n    tags: {\n        \"FIC_101.PV\": fic101,\n        \"TIC_101.PV\": tic101,\n        \"PIC_101.PV\": pic101,\n        \"VIB_101.RMS\": vib101\n    }\n};\n\n// Also format for direct WebSocket/Socket.IO outbound\nmsg.event = \"telemetry\";\nnode.status({ fill: 'green', shape: 'ring', text: `SIO Emitted FIC: ${fic101} | TIC: ${tic101}` });\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 440,
+    "y": 540,
+    "wires": [
+      [
+        "ws_out_ahi_telemetry",
+        "debug_sio_output"
+      ]
+    ]
+  },
+  {
+    "id": "ws_out_ahi_telemetry",
+    "type": "websocket out",
+    "z": "tab_ahi_ingest",
+    "name": "WS/SIO Telemetry Out",
+    "server": "",
+    "client": "ws_client_ahi_91",
+    "x": 710,
+    "y": 520,
+    "wires": []
+  },
+  {
+    "id": "debug_sio_output",
+    "type": "debug",
+    "z": "tab_ahi_ingest",
+    "name": "Socket.IO Packet Log",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 710,
+    "y": 560,
+    "wires": []
+  }
+]
