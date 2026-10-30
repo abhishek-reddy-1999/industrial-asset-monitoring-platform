@@ -1,0 +1,13 @@
+{
+  "id": "session-1793203064024",
+  "startedAt": "2026-10-28T15:57:44.024Z",
+  "cwd": "C:\\Users\\Administrator\\VM\\AHI DBM",
+  "context": {},
+  "metrics": {
+    "edits": 11,
+    "commands": 0,
+    "tasks": 0,
+    "errors": 0
+  },
+  "restoredAt": "2026-10-29T03:13:17.353Z"
+}
